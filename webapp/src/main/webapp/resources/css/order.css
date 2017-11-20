@@ -1,0 +1,16 @@
+.form-order {
+    display: none;
+}
+.form-order-default {
+    display: block;
+}
+.error{
+    border: 2px solid red;
+    border-radius: 4px;
+}
+.show-step{
+    display: block;
+}
+.hidden-step{
+    display: none;
+}

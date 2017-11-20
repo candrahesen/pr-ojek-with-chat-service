@@ -1,0 +1,8 @@
+{
+  "jdbc": {
+    "url": "",
+    "username": "",
+    "password": ""
+  },
+  "tokenAge": 3600
+}

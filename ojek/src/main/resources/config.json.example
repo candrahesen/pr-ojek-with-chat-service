@@ -1,0 +1,9 @@
+{
+  "identityServicePath": "",
+  "jdbc": {
+    "url": "",
+    "username": "",
+    "password": ""
+  }
+  "defaultProfPicUrl": ""
+}

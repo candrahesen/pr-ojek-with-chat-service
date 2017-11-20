@@ -1,0 +1,45 @@
+#no-pref, #no-other-driver {
+    font-size: 13pt;
+    color: gray;
+    text-align: center;
+}
+
+div.image-container{
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+}
+
+img.driver-image{
+    position: absolute;
+    left: -1000%;
+    right: -1000%;
+    top: -1000%;
+    bottom: -1000%;
+    margin: auto;
+    height: 100px;
+    min-width: auto;
+}
+
+.driver-name{
+    font-size: 15pt;
+}
+
+.driver-rating{
+    font-size: 8pt;
+}
+
+.rating{
+    color: orange;
+}
+
+.choose-button{
+    float: right;
+}
+
+.driver-detail{
+    vertical-align: center;
+    height: 100px;
+}
+

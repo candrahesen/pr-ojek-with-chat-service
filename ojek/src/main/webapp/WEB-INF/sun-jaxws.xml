@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime"
+        version="2.0">
+    <endpoint name="User"
+              implementation="com.jauharteam.ojek.ojek.user.UserServiceImpl"
+              url-pattern="/user"/>
+    <endpoint name="Order"
+              implementation="com.jauharteam.ojek.ojek.order.OrderServiceImpl"
+              url-pattern="/order"/>
+    <endpoint name="Location"
+              implementation="com.jauharteam.ojek.ojek.location.LocationServiceImpl"
+              url-pattern="/location"/>
+</endpoints>

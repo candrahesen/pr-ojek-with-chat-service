@@ -1,0 +1,235 @@
+.input-standard {
+    background: white;
+    border: 1px solid gray;
+}
+.input-standard-v2 {
+    height: 25px;
+    width: 100%;
+    padding: 0 5px;
+}
+.button {
+    border: 1px solid black;
+    padding: 5px;
+    color: #000;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+.button-success,
+.button-fail,
+.button-green {
+    border-radius: 10%;
+    padding: 10px;
+}
+.button-fail {
+    background: #CD0428;
+}
+.button-fail:hover {
+    background: #fee6ea;
+}
+.button-plain {
+    background: white;
+}
+.button-plain {
+    color: black;
+    background: white;
+}
+.button-success {
+    background: #2BAC2F;
+}
+.button-success:hover {
+    background: #ebfaeb;
+}
+.button-green {
+    border-radius: 10%;
+    background: #82D800;
+    font-family: Rockwell;
+    border: 2px solid black;
+}
+.button-progress-now {
+    background: #FFFF9D;
+    color: #666;
+}
+.button-disable {
+    cursor: default;
+}
+.button-upload {
+    background-color: #ccc;
+    border: 1px solid gray;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px;
+    line-height: 25px;
+    height: 25px;
+    padding: 0;
+}
+.button-add {
+    margin: 0 auto;
+    padding: 0 10px !important;
+    text-align: center;
+    line-height: 25px;
+    height: 25px;
+}
+.circle-numbering {
+    color: #222;
+    background: gray;
+    border-radius: 50%;
+    text-align: center;
+}
+.switch {
+    position: relative;
+    float: right;
+    display: inline-block;
+    width: 40px;
+    height: 24px;
+}
+.switch input {
+    display: none;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 12px;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+input:checked + .slider {
+    background-color: #035503;
+}
+input:checked + .slider:before {
+    -webkit-transform: translateX(14px);
+    -ms-transform: translateX(14px);
+    transform: translateX(14px);
+}
+.rating-list {
+    list-style: none;
+    width: 60%;
+    margin: 0px auto;
+    text-align: center;
+}
+.rating-element {
+    width: 20%;
+    float: left;
+    color: gray;
+    cursor: pointer;
+    transition: color 0.5s ease-out;
+    -webkit-transition: color 0.5s ease-out;
+    -moz-transition: color 0.5s ease-out;
+    -o-transition: color 0.5s ease-out;
+}
+
+.warning {
+    color: #ff0000;
+}
+
+.no-border {
+    border: 0px !important;
+}
+
+.form-order {
+    display: none;
+}
+.form-order-default {
+    display: block;
+}
+.error{
+    border: 2px solid red;
+    border-radius: 4px;
+}
+
+/* The Modal (background) */
+.modalview {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 75%;
+}
+
+.scrollable {
+    max-height: 200px;
+    overflow: auto;
+}
+
+/* The Close Button */
+.closemodal {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+.buttonmodal {
+	border : 2px solid black;
+}
+.modal-text{
+	font-size : 20pt;
+	font-family :Rockwell;
+	color :gray;
+	text-align: center;
+}
+.modal-options{
+	text-align:center;
+	margin-top : 20px;
+}
+
+.warning-box{
+    padding: 10px;
+    background-color: #f44336;
+    color: white;
+    transition: 0.2s;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}
