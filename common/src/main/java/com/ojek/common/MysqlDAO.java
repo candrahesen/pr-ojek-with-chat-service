@@ -52,7 +52,7 @@ public abstract class MysqlDAO {
     }
 
     protected synchronized Connection getConnection() {
-        while (connectionPool != null) {
+        while (connectionPool != null && !connectionPool.isEmpty()) {
             Connection connection = connectionPool.poll();
             if (connection == null)
                 continue;

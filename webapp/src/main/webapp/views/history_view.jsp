@@ -38,10 +38,10 @@
                     <% for (Order order1 : historyDriver ){ %>
                     <% driverHistory++; %>
 
-                    <div id="history-<%= order1.getId()%>" class="row" style="<%= order1.getDriver_show()?"block":"none" %>">
+                    <div id="history-<%= order1.getId()%>" class="row" style="<%= order1.getDriverShow()?"block":"none" %>">
                         <div class='col-3'>
                             <div class='picture driver-picture'>
-                                <img src="<%= userService.getUserById(accessToken, order1.getCustomer_id()).getProfpicUrl() %>" alt='no file'>
+                                <img src="<%= userService.getUserById(accessToken, order1.getCustomerId()).getProfpicUrl() %>" alt='no file'>
                             </div>
                         </div>
 
@@ -50,13 +50,13 @@
                                 <%= order1.getTime().getTime() %>
                             </div>
                             <div class='driver-name'>
-                                <%= userService.getUserById(accessToken, order1.getCustomer_id()).getName()%>
+                                <%= userService.getUserById(accessToken, order1.getCustomerId()).getName()%>
                             </div>
                             <div class="text">
                                 gave <span class="rating"> <%= order1.getRate() %> </span> stars for this order
                             </div>
                             <div class="text">
-                                <span class="text"> <%= locationService.getLocationById(accessToken, order1.getLocation_id()).getLocation()%> </span>&rarr;<span class="text"> <%= locationService.getLocationById(accessToken, order1.getDestination_id()).getLocation()%> </span>
+                                <span class="text"> <%= locationService.getLocationById(accessToken, order1.getLocationId()).getLocation()%> </span>&rarr;<span class="text"> <%= locationService.getLocationById(accessToken, order1.getDestinationId()).getLocation()%> </span>
                             </div>
                             <div class="text">
                                 and left comment:
@@ -86,10 +86,10 @@
                 <% System.out.println("order2 : " + order2); %>
                 <% customerHistory++; %>
 
-                    <div id="previous-<%= order2.getId() %>" class="row" style="<%= order2.getCustomer_show()?"block":"none" %>">
+                    <div id="previous-<%= order2.getId() %>" class="row" style="<%= order2.getCustomerShow()?"block":"none" %>">
                         <div class='col-3'>
                             <div class='picture driver-picture'>
-                                <img src="<%= userService.getUserById(accessToken, order2.getDriver_id()).getProfpicUrl() %>" alt='no file'>
+                                <img src="<%= userService.getUserById(accessToken, order2.getDriverId()).getProfpicUrl() %>" alt='no file'>
                             </div>
                         </div>
                         <div class='col-8 driver-detail'>
@@ -98,11 +98,11 @@
                                 <%--<?php echo date('l, F j Y', strtotime($row['time'])); ?>--%>
                             </div>
                             <div class='driver-name'>
-                                <%= userService.getUserById(accessToken, order2.getDriver_id()).getName() %>
+                                <%= userService.getUserById(accessToken, order2.getDriverId()).getName() %>
                                 <%--<?php echo $row['driver_name']; ?>--%>
                             </div>
                             <div class="text">
-                                <span class="text"> <%= locationService.getLocationById(accessToken, order2.getLocation_id()).getLocation()%> </span>&rarr;<span class="text"> <%= locationService.getLocationById(accessToken, order2.getDestination_id()).getLocation()%> </span>
+                                <span class="text"> <%= locationService.getLocationById(accessToken, order2.getLocationId()).getLocation()%> </span>&rarr;<span class="text"> <%= locationService.getLocationById(accessToken, order2.getDestinationId()).getLocation()%> </span>
                             </div>
                             <div class="row">
                                 <div class="col-3" style="padding-left:0px;" >
