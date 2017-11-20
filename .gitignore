@@ -17,6 +17,4 @@ bin
 classes
 classes/*
 /classes/
-gradlew.bat
-gradlew
 gradle/
