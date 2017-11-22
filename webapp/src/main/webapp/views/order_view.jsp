@@ -67,6 +67,27 @@
                     </div>
                 </div>
             </section>
+            <section id="find-order" ng-show="state == 'main'">
+                <div>
+                    <h3>LOOKING FOR AN ORDER</h3>
+                    <div style="text-align: center">
+                        <button class="button button-success" ng-click="nextToFindOrder()">FIND ORDER</button>    
+                    </div>
+                </div>
+            </section>
+            <section id="finding-order" ng-show="state == 'finding'">
+                <div>
+                    <h3>LOOKING FOR AN ORDER</h3>
+                    <div style="text-align: center" id="finding">
+                        <p style="font-weight: bold">Finding Order...</p>
+                        <div class="loader"></div>
+                        <button class="button button-fail" ng-click="cancelFinding()">CANCEL</button>    
+                    </div>
+                    <div class="alert-box success" id="get-notif">
+                        <span>Okay! </span>We got you an order.
+                    </div>
+                </div>
+            </section>
             <section id="choose-driver" ng-show="state == 'choosing'">
                 <div class="form-order" id="select-driver" style="display: none">
                     <div class="container rounded-border" id="thereprefdriver">
