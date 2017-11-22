@@ -114,7 +114,46 @@
                     </div>
                 </div>
             </section>
-            
+            <section id="chat-room" ng-show="state == 'chatting'">
+                <div class="panel-body msg_container_base" id="chat-container">
+                    <div ng-repeat="msg in messages">
+                        <div ng-if="msg.pos == 'left'">
+                            <div class="row msg_container base_receive">
+                                <div class="col-2 col-2 avatar">
+                                    <img src="images/pikachu.png" class="img-responsive ">
+                                </div>
+                                <div class="col-10 col-10">
+                                    <div class="messages msg_receive chat-left">
+                                        <p>{{msg.message}}</p>
+                                        <time datetime="2009-11-13T20:00">{{msg.username}} • {{msg.time}}</time>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                        <div ng-if="msg.pos == 'right'">
+                            <div class="row msg_container base_sent">
+                                <div class="col-10 col-10 ">
+                                    <div class="messages msg_sent chat-right">
+                                        <p>{{msg.message}}</p>
+                                        <time datetime="2009-11-13T20:00">{{msg.username}} • {{msg.time}}</time>
+                                    </div>
+                                </div>
+                                <div class="col-2 col-2 avatar">
+                                    <img src="images/pikachu.png" class=" img-responsive ">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer" style="margin: 5px 0px;">
+                    <div class="input-group row">
+                        <input id="btn-input" type="text" class="chat_input col-9" placeholder="Write your message here..." ng-model="input_msg" ng-enter="sendMessage()"/>
+                        <div class="col-3" style="padding: 0px">
+                            <div id="btn-chat" class="send-button" ng-click="sendMessage()">Send</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <section id="complete-order" ng-show="state == 'completing'">
                 <div class="form-order" id="complete-order" style="display: none">
                     <h3>HOW WAS IT?</h3>
