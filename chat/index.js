@@ -1,24 +1,59 @@
-const express = require('express')
-const app = express()
+var express = require('express');  
+var app = express();  
+var server = require('http').createServer(app); 
+var request = require('request'); 
+var querystring = require('querystring');
 
-var firebase = require("firebase")
+app.post('/send', function(req, res) {
+  var topics = "/topics/" +  req.query.topics;
+  var messages = req.query.messages;
 
- // Initialize Firebase
-var config = {
-	apiKey: "AIzaSyBxzVgPhOMrFtz8t-b5PE8ZZEWQvyWDgEY",
-	authDomain: "pr-ojek-e79f4.firebaseapp.com",
-	databaseURL: "https://pr-ojek-e79f4.firebaseio.com",
-	projectId: "pr-ojek-e79f4",
-	storageBucket: "pr-ojek-e79f4.appspot.com",
-	messagingSenderId: "1077844006265"
-};
-firebase.initializeApp(config);
+  var payloadbody = {
+    to : topics,
+    priority : "high",
+    notification : {
+      body : messages,
+      title : "FCM Message"
+    }
+  }
 
+  payloadbody = querystring.stringify(payloadbody);
 
-app.get('/', (req, res) => res.send('Hello world!'))
+  console.log('topics: ' + topics + ' message: ' + req.query.messages);
+  request({
+    headers: {
+      'Content-Length': payloadbody.length,
+      'Content-Type': 'application/json',
+      'Authorization': 'key=AAAA-vSCVXk:APA91bEd9voLgauOsD8F-ND2mClzYBlMznKIJmwQWJEW4sPz_u4lXN6Qy9UDjur5LjZltBXgCxLKpLRgnw5jCg4HuFcSAdYINMUqm4RNF8FQKOV_Q0qXeFOWqTjDZ91ZkwtQKdjib3Gr' 
+    },
+    uri: 'https://fcm.googleapis.com/fcm/send',
+    body: {
+      to : topics,
+      priority : "high",
+      notification : {
+        body : messages,
+        title : "FCM Message"
+      }
+    },
+    method: "POST",
+    json: true
+  }, function(error, response, body) {
+    console.log('error:', error); // Print the error if one occurred
+    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+    console.log('body:', body); // Print the HTML for the Google homepage.
+    res.write("Bocans");
+    res.end();
+  });
+});
 
-app.get('/login', function(req, res) {
-	console.log(req.query)
-})
-
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
+/*
+request('http://localhost:3000/send', function (error, response, body) {
+  console.log('error:', error); // Print the error if one occurred
+  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+  console.log('body:', body); // Print the HTML for the Google homepage.
+});
+	*/
+//start our web server
+server.listen(3000, function(){
+  console.log('listening on *:3000');
+});
