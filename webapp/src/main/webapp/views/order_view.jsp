@@ -1,11 +1,50 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="com.jauharteam.ojek.ojek.UserService" %>
 <%@ page import="com.ojek.common.User" %>
+<%@ page import="com.jauharteam.ojek.webapp.Config" %>
 <%
-	String accessToken = (String) request.getAttribute("accessToken");
-	UserService userService = (UserService) request.getAttribute("userService");
-	User user = userService.getUser(accessToken);
+    String accessToken = (String) request.getAttribute("accessToken");
+    UserService userService = (UserService) request.getAttribute("userService");
+    User user = userService.getUser(accessToken);
 %>
+
+<%
+    Config conf = (Config) request.getAttribute("config");
+    String path = request.getRequestURI();
+    path = path.replaceAll("\\/([a-zA-Z0-9]+)\\.jsp", "$1");
+%>
+<%
+    long ts = (new Date()).getTime(); //Used to prevent JS/CSS caching
+%>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order PR-Ojek</title>
+    <link rel="stylesheet" href="./resources/css/style.css?<%= ts %>" >
+    <link rel="stylesheet" href="./resources/css/element.css?<%= ts %>">
+    <link rel="stylesheet" href="./resources/css/order.css?<%= ts %>">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <meta charset="utf-8">
+</head>
+<body>
+<div class="default-extern-container" ng-app="orderApp" ng-controller="appController">
+    <div class="row">
+        <div class="col-6">
+            <h1 class="logo"><span style="color: #034E03;">PR</span>-<span style="color:red;">OJEK</span></h1>
+            <h2 class="tagline" style="color: #468D03;">wushh... wushh... ngeeeeeenggg...</h2>
+        </div>
+        <div class="col-6 align-right">
+            <p>Hello, <%= user.getUsername() %> !</p>
+            <a href="<%= conf.getBaseUrl() %>logout">Logout</a>
+        </div>
+    </div>
+    <ul class="row navbar">
+        <li class="col-4 align-center standard-border <% if(path.equals("order")) {%>active<%}%>"><a href="<%= conf.getBaseUrl() %>order">Order</a></li>
+        <li class="col-4 align-center standard-border <% if(path.equals("history")) {%>active<%}%>"><a href="<%= conf.getBaseUrl() %>history">History</a></li>
+        <li class="col-4 align-center standard-border <% if(path.equals("profile") || path.equals("editprofile") || path.equals("editlocation")) {%>active<%}%>"><a href="<%= conf.getBaseUrl() %>profile">My Profile</a></li>
+    </ul>
             <section id="make-order" ng-show="state == 'main'">
                 <div>
                     <h3>MAKE AN ORDER</h3>
@@ -71,7 +110,7 @@
                 <div>
                     <h3>LOOKING FOR AN ORDER</h3>
                     <div style="text-align: center">
-                        <button class="button button-success" ng-click="nextToFindOrder()">FIND ORDER</button>    
+                        <button class="button button-success" ng-click="nextToFindOrder()">FIND ORDER</button>
                     </div>
                 </div>
             </section>
@@ -81,7 +120,7 @@
                     <div style="text-align: center" id="finding">
                         <p style="font-weight: bold">Finding Order...</p>
                         <div class="loader"></div>
-                        <button class="button button-fail" ng-click="cancelFinding()">CANCEL</button>    
+                        <button class="button button-fail" ng-click="cancelFinding()">CANCEL</button>
                     </div>
                 </div>
                 <div class="alert-box success" id="get-notif" ng-show="state == 'finding.got'">
@@ -93,7 +132,7 @@
                     <div class="container rounded-border" id="thereprefdriver">
                         <h2>PREFERRED DRIVERS:</h2>
                         <div id="prefer-driver">
-                        <!-- display preferred driver after button next clicked--> 
+                        <!-- display preferred driver after button next clicked-->
                         </div>
                     </div>
                     <div class="container rounded-border">
@@ -128,7 +167,7 @@
                                         <time datetime="2009-11-13T20:00">{{msg.username}} • {{msg.time}}</time>
                                     </div>
                                 </div>
-                            </div>  
+                            </div>
                         </div>
                         <div ng-if="msg.pos == 'right'">
                             <div class="row msg_container base_sent">
@@ -216,9 +255,13 @@
 			<script>
 				var idCustomer = <%= user.getId() %>
 			</script>
-            <% long ts = (new Date()).getTime(); //Used to prevent JS/CSS caching %>
 			<script type="text/javascript" src="./resources/js/order.js?<%=ts%>"></script>
 			<script type="text/javascript" src="./resources/js/ajax.js?<%= ts %>"></script>
 
             <%--<script type="text/javascript" src="assets/js/ajax.js"></script>--%>
             <%--<script type="text/javascript" src="assets/js/order.js"></script>--%>
+
+
+        </div>
+    </body>
+</html>
