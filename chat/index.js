@@ -17,42 +17,31 @@ app.post('/send', function(req, res) {
     }
   }
 
-  payloadbody = querystring.stringify(payloadbody);
-
-  console.log('topics: ' + topics + ' message: ' + req.query.messages);
-  request({
-    headers: {
-      'Content-Length': payloadbody.length,
+  console.log("Sending: " + payloadbody);
+  
+  request.post('https://fcm.googleapis.com/fcm/send',
+   {headers : {
       'Content-Type': 'application/json',
       'Authorization': 'key=AAAA-vSCVXk:APA91bEd9voLgauOsD8F-ND2mClzYBlMznKIJmwQWJEW4sPz_u4lXN6Qy9UDjur5LjZltBXgCxLKpLRgnw5jCg4HuFcSAdYINMUqm4RNF8FQKOV_Q0qXeFOWqTjDZ91ZkwtQKdjib3Gr' 
     },
-    uri: 'https://fcm.googleapis.com/fcm/send',
-    body: {
-      to : topics,
-      priority : "high",
-      notification : {
-        body : messages,
-        title : "FCM Message"
+    json: payloadbody}
+  ).on('response', function(response){
+    console.log("Status code: " + response.statusCode);
+    response.on('data', function(data){
+      console.log("Get data: " + data.toString());
+      if(JSON.parse(data).hasOwnProperty('message_id')){
+        res.write(JSON.stringify({status : 'success'}));
+      } else {
+        res.write(JSON.stringify({status : 'failed'}));
       }
-    },
-    method: "POST",
-    json: true
-  }, function(error, response, body) {
-    console.log('error:', error); // Print the error if one occurred
-    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-    console.log('body:', body); // Print the HTML for the Google homepage.
-    res.write("Bocans");
-    res.end();
+      res.end();
+    });
+  }).on('error', function(err){
+    res.write(JSON.stringify({status: 'failed'}));
+    res.close();
   });
 });
 
-/*
-request('http://localhost:3000/send', function (error, response, body) {
-  console.log('error:', error); // Print the error if one occurred
-  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-  console.log('body:', body); // Print the HTML for the Google homepage.
-});
-	*/
 //start our web server
 server.listen(3000, function(){
   console.log('listening on *:3000');
