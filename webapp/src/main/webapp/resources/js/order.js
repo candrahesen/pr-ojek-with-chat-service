@@ -609,6 +609,8 @@ app.controller('appController', function($scope, $timeout, $http){
 
     $scope.chosenDriver = null;
 
+    $scope.modalVerifyOrder = {};
+
     $scope.sendMessage = function(){
         var time = new Date();
         var string_time = time.getHours() + ':' + time.getMinutes();
@@ -680,7 +682,10 @@ app.controller('appController', function($scope, $timeout, $http){
 
     $scope.selectDriver = function(event){
         $scope.chosenDriver = event.target.id;
-        $scope.state = 'verifyChoose';
+        $scope.state = 'chatting';
+        $scope.modalVerifyOrder = {
+            'display' : 'block'
+        }
         console.log($scope.chosenDriver + ' ' + $scope.state);
     }
 });

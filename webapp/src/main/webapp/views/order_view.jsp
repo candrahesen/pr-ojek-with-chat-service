@@ -191,7 +191,7 @@
                     </div>
                 </div>
             </section>
-            <div id="modalverifyorder" class="modalview" ng-show="state == 'verifyChoose'">
+            <div id="modalverifyorder" class="modalview" ng-style="modalVerifiyOrder">
                     <!-- Modal content -->
               <div class="modal-content">
                   <div class="modal-text">Are you sure?</div>
