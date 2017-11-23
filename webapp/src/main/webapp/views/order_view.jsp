@@ -49,22 +49,28 @@
                 <div>
                     <h3>MAKE AN ORDER</h3>
                     <ul class="row">
-                        <li class="col-4">
+                        <li class="col-3">
                             <button id="tab-select-destination" class="taborder button button-progress-now row button-disable" disabled>
                                 <div class="circle-numbering col-3">1</div>
-                                Select Destination
+                                Select Dest.
                             </button>
                         </li>
-                        <li class="col-4">
+                        <li class="col-3">
                             <button id="tab-select-driver" class="taborder button button-plain row button-disable" disabled>
                                 <div class="circle-numbering col-3">2</div>
                                 Select a Driver
                             </button>
                         </li>
-                        <li class="col-4">
+                        <li class="col-3">
                             <button id="tab-complete-order" class="taborder button button-plain row button-disable" disabled>
                                 <div class="circle-numbering col-3">3</div>
-                                Complete your order
+                                Chat Driver
+                            </button>
+                        </li>
+                        <li class="col-3">
+                            <button id="tab-complete-order" class="taborder button button-plain row button-disable" disabled>
+                                <div class="circle-numbering col-3">4</div>
+                                Compl. order
                             </button>
                         </li>
                     </ul>
@@ -77,8 +83,7 @@
                             </div>
                             <label>
                                 <input class="col-7 input-standard" autocorrect="off" autocomplete="off" name="pickingpoint" placeholder="Fill A Place"
-                                            id="pickingpoint" type="text" size="30" list="suggest-pickingpoint">
-                                <datalist id="suggest-pickingpoint"></datalist>
+                                            id="pickingpoint" type="text" size="30" ng-model="picking">
                             </label>
                         </div>
                         <div class="row">
@@ -87,8 +92,7 @@
                             </div>
                             <label>
                                 <input class="col-7 input-standard" autocorrect="off" autocomplete="off" name="destination" placeholder="Fill A Place"
-                                            id="destination"  type="text" size="30" list="suggest-destination">
-                                <datalist id="suggest-destination"></datalist>
+                                            id="destination"  type="text" size="30" ng-model="destination">
                             </label>
                         </div>
                         <div class="row">
@@ -99,7 +103,7 @@
                                         id="preferreddriver"  type="text" size="30">
                         </div>
                         <div style="text-align: center; margin: 15px 0px;">
-                            <div class="button button-success" onclick="grabDriver()">NEXT!</div>
+                            <div class="button button-success" ng-click="grabDriver()">NEXT!</div>
                         </div>
                         <div class="row warning-box" id="warning-msg-loc" style='display: none;'>
                         </div>

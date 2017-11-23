@@ -600,6 +600,9 @@ app.controller('appController', function($scope, $timeout){
         },
     ];
     $scope.input_msg = "";
+    $scope.picking = "";
+    $scope.destination = "";
+
     $scope.sendMessage = function(){
         var time = new Date();
         var string_time = time.getHours() + ':' + time.getMinutes();
@@ -627,5 +630,9 @@ app.controller('appController', function($scope, $timeout){
     }
     $scope.cancelFinding = function(){
         $scope.state = 'main';
+    }
+
+    $scope.grabDriver = function(){
+        alert($scope.destination + $scope.picking);
     }
 });
