@@ -577,7 +577,7 @@ app.directive('ngEnter', function () {
     };
 });
 
-app.controller('appController', function($scope, $timeout){
+app.controller('appController', function($scope, $timeout, $http){
     $scope.state = 'main';
     $scope.messages = [
         {
@@ -602,6 +602,10 @@ app.controller('appController', function($scope, $timeout){
     $scope.input_msg = "";
     $scope.picking = "";
     $scope.destination = "";
+    $scope.preferredDriver = "";
+
+    $scope.showPrefDriver = [];
+    $scope.showOtherDriver = [];
 
     $scope.sendMessage = function(){
         var time = new Date();
@@ -633,6 +637,41 @@ app.controller('appController', function($scope, $timeout){
     }
 
     $scope.grabDriver = function(){
-        alert($scope.destination + $scope.picking);
+        if($scope.preferredDriver != ""){
+            $http({
+                url : "/webapp/soapservlet",
+                method : "POST",
+                headers: {'Content-Type': 'application/json'},
+                params : {
+                    "name": "get-driver", 
+                    "dest": $scope.destination, 
+                    "loc": $scope.picking, 
+                    "prefDriver": $scope.preferredDriver
+                }
+            }).then(function success(response){
+                console.log(response.data);  
+                $scope.showPrefDriver = response.data;
+                $scope.state = 'choosing';
+            }, function error(response){
+                console.log(response.statusText);
+            });
+        } else {
+            $http({
+                url : "/webapp/soapservlet",
+                method : "POST",
+                headers: {'Content-Type': 'application/json'},
+                params : {
+                    "name": "get-driver", 
+                    "dest": $scope.destination, 
+                    "loc": $scope.picking, 
+                }
+            }).then(function success(response){
+                console.log(response.data);  
+                $scope.showOtherDriver = response.data;
+                $scope.state = 'choosing';
+            }, function error(response){
+                console.log(response.statusText);
+            });
+        }
     }
 });

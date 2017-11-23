@@ -100,7 +100,7 @@
                                 Preferred Driver
                             </div>
                             <input class="col-7 input-standard" name="preferreddriver" placeholder="(optional)"
-                                        id="preferreddriver"  type="text" size="30">
+                                        id="preferreddriver"  type="text" size="30" ng-model="preferredDriver">
                         </div>
                         <div style="text-align: center; margin: 15px 0px;">
                             <div class="button button-success" ng-click="grabDriver()">NEXT!</div>
@@ -132,17 +132,61 @@
                 </div>
             </section>
             <section id="choose-driver" ng-show="state == 'choosing'">
-                <div class="form-order" id="select-driver" style="display: none">
+                <div  id="select-driver">
                     <div class="container rounded-border" id="thereprefdriver">
                         <h2>PREFERRED DRIVERS:</h2>
                         <div id="prefer-driver">
                         <!-- display preferred driver after button next clicked-->
+                            <div id='no-pref' ng-show="showPrefDriver.length == 0">
+                                Nothing to display :(
+                            </div>
+                            <div class='row' ng-repeat="driver in showPrefDriver">
+                                <div class='col-4'>
+                                    <div class='picture driver-picture'>
+                                        <img src='{{driver.profile_pic_url}}' alt="PR-Ojek">
+                                    </div>
+                                </div>
+                                <div class='col-8 driver-detail'>
+                                    <div class='driver-name'>
+                                        {{driver.name}}
+                                    </div>
+                                    <div class='driver-rating'>
+                                            <span style='color:orange'>&#9734;</span>
+                                            <span class='rating'> {{driver.rating}}</span>({{driver.votes}} votes)
+                                    </div>
+                                    <div class='row'>
+                                            <a href='#' class='button button-success right' id='{{driver.ID}}' onclick='selectDriver(this)'>I CH0OSE YOU!</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="container rounded-border">
                         <h2>OTHER DRIVERS:</h2>
                         <div id="other-driver">
                         <!-- display drivers w/ our picking point as preferred loc after button next clicked-->
+                            <div id='no-pref' ng-show="showOtherDriver.length == 0">
+                                Nothing to display :(
+                            </div>
+                            <div class='row' ng-repeat="driver in showOtherDriver">
+                                <div class='col-4'>
+                                    <div class='picture driver-picture'>
+                                        <img src='{{driver.profile_pic_url}}' alt="PR-Ojek">
+                                    </div>
+                                </div>
+                                <div class='col-8 driver-detail'>
+                                    <div class='driver-name'>
+                                        {{driver.name}}
+                                    </div>
+                                    <div class='driver-rating'>
+                                            <span style='color:orange'>&#9734;</span>
+                                            <span class='rating'> {{driver.rating}}</span>({{driver.votes}} votes)
+                                    </div>
+                                    <div class='row'>
+                                            <a href='#' class='button button-success right' id='{{driver.ID}}' onclick='selectDriver(this)'>I CH0OSE YOU!</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div id="modalverifyorder" class="modalview">
@@ -168,7 +212,7 @@
                                 <div class="col-10 col-10">
                                     <div class="messages msg_receive chat-left">
                                         <p>{{msg.message}}</p>
-                                        <time datetime="2009-11-13T20:00">{{msg.username}} • {{msg.time}}</time>
+                                        <time datetime="2009-11-13T20:00">{{msg.username}} - {{msg.time}}</time>
                                     </div>
                                 </div>
                             </div>
@@ -178,7 +222,7 @@
                                 <div class="col-10 col-10 ">
                                     <div class="messages msg_sent chat-right">
                                         <p>{{msg.message}}</p>
-                                        <time datetime="2009-11-13T20:00">{{msg.username}} • {{msg.time}}</time>
+                                        <time datetime="2009-11-13T20:00">{{msg.username}} - {{msg.time}}</time>
                                     </div>
                                 </div>
                                 <div class="col-2 col-2 avatar">
