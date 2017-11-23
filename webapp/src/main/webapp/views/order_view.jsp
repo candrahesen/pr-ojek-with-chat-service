@@ -155,7 +155,7 @@
                                             <span class='rating'> {{driver.rating}}</span>({{driver.votes}} votes)
                                     </div>
                                     <div class='row'>
-                                            <a href='#' class='button button-success right' id='{{driver.ID}}' onclick='selectDriver(this)'>I CH0OSE YOU!</a>
+                                            <a href='#' class='button button-success right' id='{{driver.id}}' data-ng-click='selectDriver($event)'>I CH0OSE YOU!</a>
                                     </div>
                                 </div>
                             </div>
@@ -183,24 +183,24 @@
                                             <span class='rating'> {{driver.rating}}</span>({{driver.votes}} votes)
                                     </div>
                                     <div class='row'>
-                                            <a href='#' class='button button-success right' id='{{driver.ID}}' onclick='selectDriver(this)'>I CH0OSE YOU!</a>
+                                            <a href='#' class='button button-success right' id='{{driver.id}}' data-ng-click='selectDriver($event)'>I CH0OSE YOU!</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="modalverifyorder" class="modalview">
-                              <!-- Modal content -->
-                        <div class="modal-content">
-                            <div class="modal-text">Are you sure?</div>
-                            <div class="modal-options">
-                                <a class="button button-fail" id="no-order">NO</a>
-                                <a class="button button-success" id="yes-order">YES</a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </section>
+            <div id="modalverifyorder" class="modalview" ng-show="state == 'verifyChoose'">
+                    <!-- Modal content -->
+              <div class="modal-content">
+                  <div class="modal-text">Are you sure?</div>
+                  <div class="modal-options">
+                      <a class="button button-fail" id="no-order">NO</a>
+                      <a class="button button-success" id="yes-order">YES</a>
+                  </div>
+              </div>
+          </div>
             <section id="chat-room" ng-show="state == 'chatting'">
                 <div class="panel-body msg_container_base" id="chat-container">
                     <div ng-repeat="msg in messages">

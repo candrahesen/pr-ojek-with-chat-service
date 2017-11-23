@@ -607,6 +607,8 @@ app.controller('appController', function($scope, $timeout, $http){
     $scope.showPrefDriver = [];
     $scope.showOtherDriver = [];
 
+    $scope.chosenDriver = null;
+
     $scope.sendMessage = function(){
         var time = new Date();
         var string_time = time.getHours() + ':' + time.getMinutes();
@@ -631,10 +633,11 @@ app.controller('appController', function($scope, $timeout, $http){
                 $scope.state = 'chatting';
             }, 1000);
         }, 2000);
-    }
+    };
+
     $scope.cancelFinding = function(){
         $scope.state = 'main';
-    }
+    };
 
     $scope.grabDriver = function(){
         if($scope.preferredDriver != ""){
@@ -673,5 +676,11 @@ app.controller('appController', function($scope, $timeout, $http){
                 console.log(response.statusText);
             });
         }
+    };
+
+    $scope.selectDriver = function(event){
+        $scope.chosenDriver = event.target.id;
+        $scope.state = 'verifyChoose';
+        console.log($scope.chosenDriver + ' ' + $scope.state);
     }
 });
