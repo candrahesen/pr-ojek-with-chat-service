@@ -5,23 +5,52 @@ var idDriver = 0;
 var comment = null;
 var driver
 
+window.onload = function(){
+    document.getElementById('make-order').style.display = 'block';
+    document.getElementById('find-order').style.display = 'block';
+    // document.getElementById('finding-order').style.display = 'none';
+    document.getElementById('choose-driver').style.display = 'none';
+    document.getElementById('complete-order').style.display = 'none';
+    // document.getElementById('chat-room').style.display = 'none';
+}
 
 function nextToSelectDriver() {
-    var prev = 'select-destination'
-    var next = 'select-driver'
+    var prev = 'select-destination';
+    var next = 'select-driver';
+    document.getElementById(prev).style.display = 'none';
+    document.getElementById(next).style.display = 'block';
+    document.getElementById("tab-"+prev).classList.remove("button-progress-now");
+    document.getElementById("tab-"+next).classList.add("button-progress-now");
+
+    document.getElementById('find-order').style.display = 'none';
+}
+function nextToCompleteOrder(){
+    var prev = 'select-driver'
+    var next = 'complete-order'
     document.getElementById(prev).style.display = 'none';
     document.getElementById(next).style.display = 'block';
     document.getElementById("tab-"+prev).classList.remove("button-progress-now");
     document.getElementById("tab-"+next).classList.add("button-progress-now");
 }
-function nextToCompleteOrder(){
-    var prev = 'select-driver'
-    var next = 'complete-order'
-	console.log('NENE')
-    document.getElementById(prev).style.display = 'none';
-    document.getElementById(next).style.display = 'block';
-    document.getElementById("tab-"+prev).classList.remove("button-progress-now");
-    document.getElementById("tab-"+next).classList.add("button-progress-now");
+
+function nextToFindOrder(){
+    document.getElementById('make-order').style.display = 'none';
+    document.getElementById('find-order').style.display = 'none';
+    document.getElementById('finding-order').style.display = 'block';
+    document.getElementById('get-notif').style.display = 'none';
+
+    setTimeout(function(){gotOrder();}, 2000);
+}
+
+function gotOrder(){
+    document.getElementById('get-notif').style.display = 'block';
+    document.getElementById('finding').style.display = 'none';
+    setTimeout(function(){nextToChat();}, 1000);
+}
+
+function nextToChat(){
+    document.getElementById('finding-order').style.display = 'none';
+    document.getElementById('chat-room').style.display = 'block';
 }
 
 function changeTo(element){
@@ -78,76 +107,77 @@ function grabDriver(){
     destination = document.getElementById('destination').value;
     var preferreddriver = document.getElementById('preferreddriver').value;
 	var url = "/soapservlet";
-	if (preferreddriver != "") {
-        postAjax(url, {name: "get-driver", dest: destination, loc: pickingpoint, prefDriver: preferreddriver}, function (data1) {
-            console.log(data1);
-            var createElement = document.getElementById('prefer-driver');
-            var prefdetail = JSON.parse(data1);
-            var addRow = "";
-            if (prefdetail.hasOwnProperty('answer')) {
-                addRow += "<div id='no-pref'>Nothing to display :(</div>";
-            } else {
-                if (prefdetail.length > 0) {
-                    for (var i = 0; i < prefdetail.length; i++) {
-                        addRow += "<div class='row'>";
-                        addRow += "<div class='col-4'>";
-                        addRow += "<div class='picture driver-picture'>";
-                        addRow += "<img src='" + prefdetail[i]['profile_pic_url'] + "'>";
-                        addRow += "</div>";
-                        addRow += "</div>";
-                        addRow += "<div class='col-8 driver-detail'>";
-                        addRow += "<div class='driver-name'>";
-                        addRow += prefdetail[i]['name'];
-                        addRow += "</div>";
-                        addRow += "<div class='driver-rating'>";
-                        addRow += "<span style='color:orange'>&#9734;</span><span class='rating'>" + prefdetail[i]['rating'] + "</span>(" + prefdetail[i]['votes'] + " votes)";
-                        addRow += "</div>";
-                        addRow += "<div class='row'>";
-                        addRow += "<a href='#' class='button button-success right' id='" + prefdetail[i]['ID'] + "' onclick='selectDriver(this)'>I CH0OSE YOU!</a>";
-                        addRow += "</div></div></div>";
-                    }
-                } else {
-                    addRow += "<div id='no-pref'>Nothing to display :(</div>";
-                }
-            }
-            createElement.innerHTML = addRow;
-            nextToSelectDriver()
-        });
-    } else {
-        postAjax(url, {name: "get-driver", dest: destination, loc: pickingpoint}, function (data2) {
-            var driversdetail = JSON.parse(data2);
-            var createElement = document.getElementById('other-driver');
-            var addRow = "";
-            if (driversdetail.hasOwnProperty('answer')) {
-                addRow += "<div id='no-other-driver'>Nothing to display :(</div>";
-            } else {
-                if (driversdetail.length > 0) {
-                    for (var i = 0; i < driversdetail.length; i++) {
-                        addRow += "<div class='row'>";
-                        addRow += "<div class='col-4'>";
-                        addRow += "<div class='picture driver-picture'>";
-                        addRow += "<img src='" + driversdetail[i]['profile_pic_url'] + "'>";
-                        addRow += "</div>";
-                        addRow += "</div>";
-                        addRow += "<div class='col-8 driver-detail'>";
-                        addRow += "<div class='driver-name'>";
-                        addRow += driversdetail[i]['name'];
-                        addRow += "</div>";
-                        addRow += "<div class='driver-rating'>";
-                        addRow += "<span style='color:orange'>&#9734;</span><span class='rating'>" + driversdetail[i]['rating'] + "</span>(" + driversdetail[i]['votes'] + " votes)";
-                        addRow += "</div>";
-                        addRow += "<div class='row'>";
-                        addRow += "<a href='#' class='button button-success right' id='" + driversdetail[i]['id'] + "' onclick='selectDriver(this)'>I CH0OSE YOU!</a>";
-                        addRow += "</div></div></div>";
-                    }
-                } else {
-                    addRow += "<div id='no-other-driver'>Nothing to display :(</div>";
-                }
-            }
-            createElement.innerHTML = addRow;
-            nextToSelectDriver()
-        });
-	}
+	// if (preferreddriver != "") {
+    //     postAjax(url, {name: "get-driver", dest: destination, loc: pickingpoint, prefDriver: preferreddriver}, function (data1) {
+    //         console.log(data1);
+    //         var createElement = document.getElementById('prefer-driver');
+    //         var prefdetail = JSON.parse(data1);
+    //         var addRow = "";
+    //         if (prefdetail.hasOwnProperty('answer')) {
+    //             addRow += "<div id='no-pref'>Nothing to display :(</div>";
+    //         } else {
+    //             if (prefdetail.length > 0) {
+    //                 for (var i = 0; i < prefdetail.length; i++) {
+    //                     addRow += "<div class='row'>";
+    //                     addRow += "<div class='col-4'>";
+    //                     addRow += "<div class='picture driver-picture'>";
+    //                     addRow += "<img src='" + prefdetail[i]['profile_pic_url'] + "'>";
+    //                     addRow += "</div>";
+    //                     addRow += "</div>";
+    //                     addRow += "<div class='col-8 driver-detail'>";
+    //                     addRow += "<div class='driver-name'>";
+    //                     addRow += prefdetail[i]['name'];
+    //                     addRow += "</div>";
+    //                     addRow += "<div class='driver-rating'>";
+    //                     addRow += "<span style='color:orange'>&#9734;</span><span class='rating'>" + prefdetail[i]['rating'] + "</span>(" + prefdetail[i]['votes'] + " votes)";
+    //                     addRow += "</div>";
+    //                     addRow += "<div class='row'>";
+    //                     addRow += "<a href='#' class='button button-success right' id='" + prefdetail[i]['ID'] + "' onclick='selectDriver(this)'>I CH0OSE YOU!</a>";
+    //                     addRow += "</div></div></div>";
+    //                 }
+    //             } else {
+    //                 addRow += "<div id='no-pref'>Nothing to display :(</div>";
+    //             }
+    //         }
+    //         createElement.innerHTML = addRow;
+    //         nextToSelectDriver()
+    //     });
+    // } else {
+    //     postAjax(url, {name: "get-driver", dest: destination, loc: pickingpoint}, function (data2) {
+    //         var driversdetail = JSON.parse(data2);
+    //         var createElement = document.getElementById('other-driver');
+    //         var addRow = "";
+    //         if (driversdetail.hasOwnProperty('answer')) {
+    //             addRow += "<div id='no-other-driver'>Nothing to display :(</div>";
+    //         } else {
+    //             if (driversdetail.length > 0) {
+    //                 for (var i = 0; i < driversdetail.length; i++) {
+    //                     addRow += "<div class='row'>";
+    //                     addRow += "<div class='col-4'>";
+    //                     addRow += "<div class='picture driver-picture'>";
+    //                     addRow += "<img src='" + driversdetail[i]['profile_pic_url'] + "'>";
+    //                     addRow += "</div>";
+    //                     addRow += "</div>";
+    //                     addRow += "<div class='col-8 driver-detail'>";
+    //                     addRow += "<div class='driver-name'>";
+    //                     addRow += driversdetail[i]['name'];
+    //                     addRow += "</div>";
+    //                     addRow += "<div class='driver-rating'>";
+    //                     addRow += "<span style='color:orange'>&#9734;</span><span class='rating'>" + driversdetail[i]['rating'] + "</span>(" + driversdetail[i]['votes'] + " votes)";
+    //                     addRow += "</div>";
+    //                     addRow += "<div class='row'>";
+    //                     addRow += "<a href='#' class='button button-success right' id='" + driversdetail[i]['id'] + "' onclick='selectDriver(this)'>I CH0OSE YOU!</a>";
+    //                     addRow += "</div></div></div>";
+    //                 }
+    //             } else {
+    //                 addRow += "<div id='no-other-driver'>Nothing to display :(</div>";
+    //             }
+    //         }
+    //         createElement.innerHTML = addRow;
+    //         nextToSelectDriver()
+    //     });
+    // }
+    nextToSelectDriver();
 }
 
 document.getElementById('pickingpoint').onkeyup = function(event){
@@ -250,3 +280,71 @@ document.getElementById("verifysubmit").onclick = function() {
     document.getElementById('modalsubmit').style.display = "none";
 	window.location = "order";
 }
+
+var app = angular.module('orderApp', []);
+
+app.directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if (event.which === 13) {
+                scope.$apply(function () {
+                    scope.$eval(attrs.ngEnter);
+                });
+                event.preventDefault();
+            }
+        });
+    };
+});
+
+app.controller('appController', function($scope, $timeout){
+    $scope.state = 'main';
+    $scope.messages = [
+        {
+            username : 'agung',
+            message : 'Hello',
+            pos : 'right',
+            time : '11:50'
+        },
+        {
+            username : 'bocan',
+            message : 'Hello juga',
+            pos : 'left',
+            time : '11:51'
+        },
+        {
+            username : 'agung',
+            message : 'Bye',
+            pos : 'right',
+            time : '11:51'
+        },
+    ];
+    $scope.input_msg = "";
+    $scope.sendMessage = function(){
+        var time = new Date();
+        var string_time = time.getHours() + ':' + time.getMinutes();
+        $scope.messages.push({
+            username : 'agung',
+            message : $scope.input_msg,
+            pos : 'right',
+            time : string_time
+        });
+        $scope.input_msg = "";
+        // alert(angular.element("#chat-container")[0]);
+        $timeout(function(){
+            angular.element("#chat-container")[0].scrollTop = angular.element("#chat-container")[0].scrollHeight;
+        }, 50);
+        
+    };
+    $scope.nextToFindOrder = function(){
+        $scope.state = 'finding';
+        $timeout(function(){
+            $scope.state = 'finding.got';
+            $timeout(function(){
+                $scope.state = 'chatting';
+            }, 1000);
+        }, 2000);
+    }
+    $scope.cancelFinding = function(){
+        $scope.state = 'main';
+    }
+});

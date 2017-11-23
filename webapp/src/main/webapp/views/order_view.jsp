@@ -75,17 +75,17 @@
                     </div>
                 </div>
             </section>
-            <section id="finding-order" ng-show="state == 'finding'">
-                <div>
+            <section id="finding-order">
+                <div ng-show="state == 'finding'">
                     <h3>LOOKING FOR AN ORDER</h3>
                     <div style="text-align: center" id="finding">
                         <p style="font-weight: bold">Finding Order...</p>
                         <div class="loader"></div>
                         <button class="button button-fail" ng-click="cancelFinding()">CANCEL</button>    
                     </div>
-                    <div class="alert-box success" id="get-notif">
-                        <span>Okay! </span>We got you an order.
-                    </div>
+                </div>
+                <div class="alert-box success" id="get-notif" ng-show="state == 'finding.got'">
+                    <span>Okay! </span>We got you an order.
                 </div>
             </section>
             <section id="choose-driver" ng-show="state == 'choosing'">
