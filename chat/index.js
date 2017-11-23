@@ -2,7 +2,28 @@ var express = require('express');
 var app = express();  
 var server = require('http').createServer(app); 
 var request = require('request'); 
-var querystring = require('querystring');
+var chat = require('./chat');
+var db = require('./connection');
+var mongoose = require('mongoose');
+
+db.once('open', function(){
+  console.log("Connected to mongoDB");
+});
+
+var saveChat = function(sender, message, topic){
+  var chatEntity = chat({
+    topic : topic,
+    sender : sender,
+    message : message
+  })
+  
+  chatEntity.save(function(err){
+    if(err) throw err;
+  
+    console.log("Chat saved");
+  });
+}
+
 
 app.post('/send', function(req, res) {
   var topics = "/topics/" +  req.query.topics;
@@ -31,6 +52,7 @@ app.post('/send', function(req, res) {
       console.log("Get data: " + data.toString());
       if(JSON.parse(data).hasOwnProperty('message_id')){
         res.write(JSON.stringify({status : 'success'}));
+        
       } else {
         res.write(JSON.stringify({status : 'failed'}));
       }
