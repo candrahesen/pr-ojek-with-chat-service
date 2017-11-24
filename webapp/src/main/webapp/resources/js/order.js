@@ -577,7 +577,8 @@ app.directive('ngEnter', function () {
     };
 });
 
-app.controller('appController', function($scope, $timeout, $http){
+app.controller('appController', function($scope, $timeout, $http, $window){
+    $scope.isDriver = $window.isDriver;
     $scope.state = 'main';
     $scope.messages = [
         {
@@ -608,8 +609,12 @@ app.controller('appController', function($scope, $timeout, $http){
     $scope.showOtherDriver = [];
 
     $scope.chosenDriver = null;
+    $scope.role = null;
 
-    $scope.modalVerifyOrder = {};
+    $scope.selectDestClass = 'button-progress-now';
+    $scope.selectDriverClass = 'button-plain';
+    $scope.chatDriverClass = 'button-plain';
+    $scope.completeOrderClass = 'button-plain';
 
     $scope.sendMessage = function(){
         var time = new Date();
@@ -629,6 +634,7 @@ app.controller('appController', function($scope, $timeout, $http){
     };
     $scope.nextToFindOrder = function(){
         $scope.state = 'finding';
+        $scope.role = 'driver';
         $timeout(function(){
             $scope.state = 'finding.got';
             $timeout(function(){
@@ -642,6 +648,9 @@ app.controller('appController', function($scope, $timeout, $http){
     };
 
     $scope.grabDriver = function(){
+        $scope.role = 'customer';
+        $scope.selectDestClass = 'button-plain';
+        $scope.selectDriverClass = 'button-progress-now';
         if($scope.preferredDriver != ""){
             $http({
                 url : "/webapp/soapservlet",
@@ -682,10 +691,9 @@ app.controller('appController', function($scope, $timeout, $http){
 
     $scope.selectDriver = function(event){
         $scope.chosenDriver = event.target.id;
+        $scope.selectDriverClass = 'button-plain';
+        $scope.chatDriverClass = 'button-progress-now';
         $scope.state = 'chatting';
-        $scope.modalVerifyOrder = {
-            'display' : 'block'
-        }
         console.log($scope.chosenDriver + ' ' + $scope.state);
     }
 });

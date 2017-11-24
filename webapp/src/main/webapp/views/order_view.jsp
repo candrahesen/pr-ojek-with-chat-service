@@ -45,36 +45,38 @@
         <li class="col-4 align-center standard-border <% if(path.equals("history")) {%>active<%}%>"><a href="<%= conf.getBaseUrl() %>history">History</a></li>
         <li class="col-4 align-center standard-border <% if(path.equals("profile") || path.equals("editprofile") || path.equals("editlocation")) {%>active<%}%>"><a href="<%= conf.getBaseUrl() %>profile">My Profile</a></li>
     </ul>
-            <section id="make-order" ng-show="state == 'main'">
+            <section id="progress-bar" ng-show="state == 'main' || role == 'customer'">
                 <div>
                     <h3>MAKE AN ORDER</h3>
                     <ul class="row">
                         <li class="col-3">
-                            <button id="tab-select-destination" class="taborder button button-progress-now row button-disable" disabled>
+                            <button id="tab-select-destination" class="taborder button row button-disable" disabled ng-class='selectDestClass'>
                                 <div class="circle-numbering col-3">1</div>
                                 Select Dest.
                             </button>
                         </li>
                         <li class="col-3">
-                            <button id="tab-select-driver" class="taborder button button-plain row button-disable" disabled>
+                            <button id="tab-select-driver" class="taborder button row button-disable" disabled ng-class='selectDriverClass'>
                                 <div class="circle-numbering col-3">2</div>
                                 Select a Driver
                             </button>
                         </li>
                         <li class="col-3">
-                            <button id="tab-complete-order" class="taborder button button-plain row button-disable" disabled>
+                            <button id="tab-complete-order" class="taborder button row button-disable" disabled ng-class="chatDriverClass">
                                 <div class="circle-numbering col-3">3</div>
                                 Chat Driver
                             </button>
                         </li>
                         <li class="col-3">
-                            <button id="tab-complete-order" class="taborder button button-plain row button-disable" disabled>
+                            <button id="tab-complete-order" class="taborder button row button-disable" disabled ng-class="completeOrderClass">
                                 <div class="circle-numbering col-3">4</div>
                                 Compl. order
                             </button>
                         </li>
                     </ul>
                 </div>
+            </section>
+            <section id="make-order" ng-show="state == 'main'">
                 <div class="container" id="select-destination" style="display: block">
                     <div class="form-order-default">
                         <div class="row">
@@ -110,7 +112,7 @@
                     </div>
                 </div>
             </section>
-            <section id="find-order" ng-show="state == 'main'">
+            <section id="find-order" ng-show="state == 'main' && isDriver">
                 <div>
                     <h3>LOOKING FOR AN ORDER</h3>
                     <div style="text-align: center">
@@ -301,7 +303,8 @@
 			</div>
 
 			<script>
-				var idCustomer = <%= user.getId() %>
+                var idCustomer = <%= user.getId() %>;
+                var isDriver = <%= user.getDriver() %>;
 			</script>
 			<script type="text/javascript" src="./resources/js/order.js?<%=ts%>"></script>
 			<script type="text/javascript" src="./resources/js/ajax.js?<%= ts %>"></script>
