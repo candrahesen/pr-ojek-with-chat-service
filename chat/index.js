@@ -72,8 +72,24 @@ app.post('/send', function(req, res) {
   });
 });
 
-app.get('/history', function(topics) {
+app.get('/history', function(req, res) {
+    var paramtopic = req.query.topics;
 
+    console.log(paramtopic);
+
+    var identtopic = chat.find({topic : "/topics/" + paramtopic}).exec(function(err, docs){
+    	if(err) {
+    		res.write(JSON.stringify({status : 'failed'}));
+    		throw err;
+    	} else {
+    		var response = {
+    			status : "success",
+    			result : docs
+    		}
+    		res.write(JSON.stringify(response));
+    	}
+    	res.end();
+    });
 });
 
 //start our web server
