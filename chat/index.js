@@ -19,7 +19,7 @@ var saveChat = function(sender, message, topic){
   
   chatEntity.save(function(err){
     if(err) throw err;
-  
+
     console.log("Chat saved");
   });
 }
@@ -28,6 +28,7 @@ var saveChat = function(sender, message, topic){
 app.post('/send', function(req, res) {
   var topics = "/topics/" +  req.query.topics;
   var messages = req.query.messages;
+  var sender = req.query.sender;
 
   var payloadbody = {
     to : topics,
@@ -52,7 +53,14 @@ app.post('/send', function(req, res) {
       console.log("Get data: " + data.toString());
       if(JSON.parse(data).hasOwnProperty('message_id')){
         res.write(JSON.stringify({status : 'success'}));
-        
+
+        var chats = db.collection('chats');
+        chats.find({}, {_id: 0}).sort({$natural: 1}).each(function(err, doc) {
+	      console.log(doc);
+	    });
+
+    	console.log(saveChat(sender, messages, topics));
+
       } else {
         res.write(JSON.stringify({status : 'failed'}));
       }
@@ -62,6 +70,10 @@ app.post('/send', function(req, res) {
     res.write(JSON.stringify({status: 'failed'}));
     res.close();
   });
+});
+
+app.get('/history', function(topics) {
+
 });
 
 //start our web server
