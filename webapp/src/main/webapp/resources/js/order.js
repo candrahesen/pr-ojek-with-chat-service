@@ -1,90 +1,37 @@
-// var rating = 0;
-// var destination = null;;
-// var pickingpoint = null;
-// var idDriver = 0;
-// var comment = null;
-// var driver
-//
-// window.onload = function(){
-//     document.getElementById('make-order').style.display = 'block';
-//     document.getElementById('find-order').style.display = 'block';
-//     // document.getElementById('finding-order').style.display = 'none';
-//     document.getElementById('choose-driver').style.display = 'none';
-//     document.getElementById('complete-order').style.display = 'none';
-//     // document.getElementById('chat-room').style.display = 'none';
-// }
-//
-// function nextToSelectDriver() {
-//     var prev = 'select-destination';
-//     var next = 'select-driver';
-//     document.getElementById(prev).style.display = 'none';
-//     document.getElementById(next).style.display = 'block';
-//     document.getElementById("tab-"+prev).classList.remove("button-progress-now");
-//     document.getElementById("tab-"+next).classList.add("button-progress-now");
-//
-//     document.getElementById('find-order').style.display = 'none';
-// }
-// function nextToCompleteOrder(){
-//     var prev = 'select-driver'
-//     var next = 'complete-order'
-//     document.getElementById(prev).style.display = 'none';
-//     document.getElementById(next).style.display = 'block';
-//     document.getElementById("tab-"+prev).classList.remove("button-progress-now");
-//     document.getElementById("tab-"+next).classList.add("button-progress-now");
-// }
-//
-// function nextToFindOrder(){
-//     document.getElementById('make-order').style.display = 'none';
-//     document.getElementById('find-order').style.display = 'none';
-//     document.getElementById('finding-order').style.display = 'block';
-//     document.getElementById('get-notif').style.display = 'none';
-//
-//     setTimeout(function(){gotOrder();}, 2000);
-// }
-//
-// function gotOrder(){
-//     document.getElementById('get-notif').style.display = 'block';
-//     document.getElementById('finding').style.display = 'none';
-//     setTimeout(function(){nextToChat();}, 1000);
-// }
-//
-// function nextToChat(){
-//     document.getElementById('finding-order').style.display = 'none';
-//     document.getElementById('chat-room').style.display = 'block';
-// }
-//
-// function changeTo(element){
-//     var id = Number(element.id.charAt(7));
-//     for(var i = 1; i <= 5; i++){
-//         if(i<=id){
-//             document.getElementById("rating-"+i).style.color = "orange";
-//         } else {
-//             document.getElementById("rating-"+i).style.color = "gray";
-//         }
-//     }
-// }
-//
-// function changeBack(){
-//     for(var i=1; i <= 5; i++){
-//         if(i<=rating){
-//             document.getElementById("rating-"+i).style.color = "orange";
-//         } else {
-//             document.getElementById("rating-"+i).style.color = "gray";
-//         }
-//     }
-// }
-//
-// function rateThis(element){
-//     var id = Number(element.id.charAt(7));
-//     rating = id;
-//     for(var i = 1; i <= 5; i++){
-//         if(i<=rating){
-//             document.getElementById("rating-"+i).style.color = "orange";
-//         } else {
-//             document.getElementById("rating-"+i).style.color = "gray";
-//         }
-//     }
-// }
+var rating = 0;
+
+function changeTo(element){
+    var id = Number(element.id.charAt(7));
+    for(var i = 1; i <= 5; i++){
+        if(i<=id){
+            document.getElementById("rating-"+i).style.color = "orange";
+        } else {
+            document.getElementById("rating-"+i).style.color = "gray";
+        }
+    }
+}
+
+function changeBack(){
+    for(var i=1; i <= 5; i++){
+        if(i<=rating){
+            document.getElementById("rating-"+i).style.color = "orange";
+        } else {
+            document.getElementById("rating-"+i).style.color = "gray";
+        }
+    }
+}
+
+function rateThis(element){
+    var id = Number(element.id.charAt(7));
+    rating = id;
+    for(var i = 1; i <= 5; i++){
+        if(i<=rating){
+            document.getElementById("rating-"+i).style.color = "orange";
+        } else {
+            document.getElementById("rating-"+i).style.color = "gray";
+        }
+    }
+}
 //
 // function openOrder(step) {
 //     var i, taborder, tablinks,active,tabchosen;
@@ -610,6 +557,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
 
     $scope.chosenDriver = null;
     $scope.role = null;
+    $scope.rating = 0;
 
     $scope.selectDestClass = 'button-progress-now';
     $scope.selectDriverClass = 'button-plain';
@@ -725,5 +673,10 @@ app.controller('appController', function($scope, $timeout, $http, $window){
         $scope.state = 'completing';
         $scope.chatDriverClass = 'button-plain';
         $scope.completeOrderClass = 'button-progress-now';
+    }
+
+    $scope.rate = function(rating){
+        $scope.rating = rating;
+        alert($scope.rating);
     }
 });

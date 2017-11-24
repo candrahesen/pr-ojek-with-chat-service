@@ -290,11 +290,11 @@
                     <div class="container">
                         <div class="container">
                             <ul class="rating-list row">
-                                <li class="rating-element" id="rating-1" onmouseover="changeTo(this)" onmouseout="changeBack()" onclick="rateThis(this)"><i class="material-icons">star_rate</i></li>
-                                <li class="rating-element" id="rating-2" onmouseover="changeTo(this)" onmouseout="changeBack()" onclick="rateThis(this)"><i class="material-icons">star_rate</i></li>
-                                <li class="rating-element" id="rating-3" onmouseover="changeTo(this)" onmouseout="changeBack()" onclick="rateThis(this)"><i class="material-icons">star_rate</i></li>
-                                <li class="rating-element" id="rating-4" onmouseover="changeTo(this)" onmouseout="changeBack()" onclick="rateThis(this)"><i class="material-icons">star_rate</i></li>
-                                <li class="rating-element" id="rating-5" onmouseover="changeTo(this)" onmouseout="changeBack()" onclick="rateThis(this)"><i class="material-icons">star_rate</i></li>
+                                <li class="rating-element" id="rating-1" onmouseover="changeTo(this)" onmouseout="changeBack()" onclick="rateThis(this)" ng-click="rate(1)"><i class="material-icons">star_rate</i></li>
+                                <li class="rating-element" id="rating-2" onmouseover="changeTo(this)" onmouseout="changeBack()" onclick="rateThis(this)" ng-click="rate(2)"><i class="material-icons">star_rate</i></li>
+                                <li class="rating-element" id="rating-3" onmouseover="changeTo(this)" onmouseout="changeBack()" onclick="rateThis(this)" ng-click="rate(3)"><i class="material-icons">star_rate</i></li>
+                                <li class="rating-element" id="rating-4" onmouseover="changeTo(this)" onmouseout="changeBack()" onclick="rateThis(this)" ng-click="rate(4)"><i class="material-icons">star_rate</i></li>
+                                <li class="rating-element" id="rating-5" onmouseover="changeTo(this)" onmouseout="changeBack()" onclick="rateThis(this)" ng-click="rate(5)"><i class="material-icons">star_rate</i></li>
                              </ul>
                         </div>
                         <div class="container">
