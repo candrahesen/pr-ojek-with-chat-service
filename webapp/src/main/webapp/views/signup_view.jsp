@@ -77,6 +77,12 @@
                             <input class="button button-green right" type="submit" name="submit" value="REGISTER">
                         </div>
                     </div>
+                    <% if (request.getAttribute("errorMessage") != null) { %>
+                    <div class="row warning-box" id="warning-msg">
+                        <span class="closebtn" onclick="this.parentElement.style.display = &quot;none&quot;;">&times;</span>
+                        <%= request.getAttribute("errorMessage") %>
+                    </div>
+                    <% } %>
                 </form>
             </div>
         </div>
