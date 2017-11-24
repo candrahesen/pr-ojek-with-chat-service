@@ -204,6 +204,19 @@
               </div>
           </div>
             <section id="chat-room" ng-show="state == 'chatting'">
+                <div ng-show="role == 'driver'">
+                    <h3>LOOKING FOR AN ORDER</h3>
+                    <div class="centering-parent">
+                        <div class="green-banner">
+                            Got an Order!
+                        </div>
+                    </div>
+                    <div class="centering-parent">
+                        <div style="font-weight: bold; margin: auto;">
+                            @username
+                        </div>
+                    </div>
+                </div>
                 <div class="panel-body msg_container_base" id="chat-container">
                     <div ng-repeat="msg in messages">
                         <div ng-if="msg.pos == 'left'">
@@ -242,12 +255,12 @@
                         </div>
                     </div>
                 </div>
-                <div ng-show="role == 'customer'" style="text-align:center;">
+                <div ng-show="role == 'customer'" class="centering-parent">
                     <div id="btn-chat" class="close-button" ng-click="closeChat()">CLOSE</div>
                 </div>
             </section>
             <section id="complete-order" ng-show="state == 'completing'">
-                <div class="form-order" id="complete-order">
+                <div id="complete-order">
                     <h3>HOW WAS IT?</h3>
                     <div class="row">
                         <div class="col-4">

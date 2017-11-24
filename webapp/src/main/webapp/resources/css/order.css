@@ -182,3 +182,10 @@ img {
     cursor: pointer;
     font-size: 14pt;
 }
+
+.green-banner {
+    margin: 2px auto;
+    color: rgb(26, 153, 26);
+    font-weight: bold;
+    font-size: 14pt;
+}
