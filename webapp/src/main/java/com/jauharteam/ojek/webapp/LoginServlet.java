@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.ojek.common.util.RestUtil.httpPost;
+import static com.ojek.common.util.StringUtil.string;
 
 public class LoginServlet extends WebappServlet {
 
@@ -33,6 +34,12 @@ public class LoginServlet extends WebappServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
+
+        String userAgent = string(req.getHeader("User-Agent"));
+        String ipAddress = req.getHeader("x-forwarded-for");
+        if (ipAddress == null)
+            ipAddress = string(req.getRemoteHost());
+        System.out.println("Trying to login: " + ipAddress + " -> " + userAgent);
 
         if (checkIsLoggedIn(req)) {
             req.setAttribute("errorMessage", "User already logged in");

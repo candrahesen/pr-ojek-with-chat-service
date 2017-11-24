@@ -67,7 +67,7 @@ public class RegisterServlet extends WebappServlet {
                         resp.sendRedirect(config.getBaseUrl() + "profile");
                         return;
                     } else {
-                        req.setAttribute("errorMessage", "Internal server error.");
+                        req.setAttribute("errorMessage", "Internal server error in ojek service.");
                     }
                 } else {
                     String errorMessage = responseNode.get("errorMessage").asText();
@@ -77,7 +77,8 @@ public class RegisterServlet extends WebappServlet {
                 }
             }
         } else {
-            req.setAttribute("errorMessage", "Internal server error.");
+            req.setAttribute("errorMessage", "Internal server error. Missing configuration.");
         }
+        req.getRequestDispatcher("/signup.jsp").forward(req, resp);
     }
 }
