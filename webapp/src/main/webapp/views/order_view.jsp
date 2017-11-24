@@ -298,10 +298,10 @@
                              </ul>
                         </div>
                         <div class="container">
-                            <textarea rows="4" cols="50" id="comment-area" placeholder="Your comment..."></textarea>
+                            <textarea rows="4" cols="50" id="comment-area" placeholder="Your comment..." ng-model="comment"></textarea>
                         </div>
                         <div class="container row">
-                            <a class="button button-success" id="submit-order" type="submit" name="submit" style="float: right;">COMPLETE ORDER</a>
+                            <a class="button button-success" id="submit-order" style="float: right;" ng-click="completeOrder()">COMPLETE ORDER</a>
                         </div>
                         <div class="row warning-box" id="warning-msg-submit" style='display: none;'>
                         </div>
