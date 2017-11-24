@@ -268,7 +268,7 @@
                         <div class="col-4">
                             <div class="row">
                                 <div class="picture center profile-picture" id="driver-pict">
-                                    <img src="assets/images/pikachu.png" alt="Pikachuu">
+                                    <img src="{{chosenDriver.profile_pic_url}}" alt="{{chosenDriver.username}}">
                                 </div>
                             </div>
                         </div>
@@ -278,12 +278,12 @@
                     <div class="row profile-info">
                         <div class="row">
                             <span class="username" id="driver-username">
-                                boom
+                                {{chosenDriver.username}}
                             </span>
                         </div>
                         <div class="row">
                             <span class="full-name" id="driver-fullname">
-                                boom
+                                {{chosenDriver.name}}
                             </span>
                         </div>
                     </div>

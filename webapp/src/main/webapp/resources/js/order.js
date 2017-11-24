@@ -694,7 +694,27 @@ app.controller('appController', function($scope, $timeout, $http, $window){
     };
 
     $scope.selectDriver = function(event){
-        $scope.chosenDriver = event.target.id;
+        var id = event.target.id;
+        if ($scope.preferredDriver != ""){
+            var i = 0;
+            for (x in $scope.showPrefDriver){
+                if ($scope.showPrefDriver[i].id == id){
+                    $scope.chosenDriver = $scope.showPrefDriver[i];
+                    break;
+                }
+                i++;
+            }
+        } else {
+            var i = 0;
+            for (x in $scope.showOtherDriver){
+                if ($scope.showOtherDriver[i].id == id){
+                    $scope.chosenDriver = $scope.showOtherDriver[i];
+                    break;
+                }
+                i++;
+            }
+        }
+
         $scope.selectDriverClass = 'button-plain';
         $scope.chatDriverClass = 'button-progress-now';
         $scope.state = 'chatting';
