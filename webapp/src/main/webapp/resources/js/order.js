@@ -616,15 +616,19 @@ app.controller('appController', function($scope, $timeout, $http, $window){
     $scope.chatDriverClass = 'button-plain';
     $scope.completeOrderClass = 'button-plain';
 
-    $scope.sendMessage = function(){
+    function appendMessage(username, msg){
         var time = new Date();
         var string_time = time.getHours() + ':' + time.getMinutes();
         $scope.messages.push({
-            username : 'agung',
-            message : $scope.input_msg,
+            username : username,
+            message : msg,
             pos : 'right',
             time : string_time
         });
+    };
+
+    $scope.sendMessage = function(){
+        appendMessage('agung', $scope.input_msg);
         $scope.input_msg = "";
         // alert(angular.element("#chat-container")[0]);
         $timeout(function(){
@@ -695,5 +699,11 @@ app.controller('appController', function($scope, $timeout, $http, $window){
         $scope.chatDriverClass = 'button-progress-now';
         $scope.state = 'chatting';
         console.log($scope.chosenDriver + ' ' + $scope.state);
+    }
+
+    $scope.closeChat = function(){
+        $scope.state = 'completing';
+        $scope.chatDriverClass = 'button-plain';
+        $scope.completeOrderClass = 'button-progress-now';
     }
 });

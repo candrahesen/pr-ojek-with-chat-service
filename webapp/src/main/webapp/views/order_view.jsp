@@ -209,7 +209,7 @@
                         <div ng-if="msg.pos == 'left'">
                             <div class="row msg_container base_receive">
                                 <div class="col-2 col-2 avatar">
-                                    <img src="images/pikachu.png" class="img-responsive ">
+                                    <img src="resources/images/user.png" class="img-responsive ">
                                 </div>
                                 <div class="col-10 col-10">
                                     <div class="messages msg_receive chat-left">
@@ -228,7 +228,7 @@
                                     </div>
                                 </div>
                                 <div class="col-2 col-2 avatar">
-                                    <img src="images/pikachu.png" class=" img-responsive ">
+                                    <img src="resources/images/user.png" class=" img-responsive ">
                                 </div>
                             </div>
                         </div>
@@ -242,9 +242,12 @@
                         </div>
                     </div>
                 </div>
+                <div ng-show="role == 'customer'" style="text-align:center;">
+                    <div id="btn-chat" class="close-button" ng-click="closeChat()">CLOSE</div>
+                </div>
             </section>
             <section id="complete-order" ng-show="state == 'completing'">
-                <div class="form-order" id="complete-order" style="display: none">
+                <div class="form-order" id="complete-order">
                     <h3>HOW WAS IT?</h3>
                     <div class="row">
                         <div class="col-4">
