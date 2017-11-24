@@ -18,3 +18,4 @@ classes
 classes/*
 /classes/
 gradle/
+copy.sh
