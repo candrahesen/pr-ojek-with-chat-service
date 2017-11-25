@@ -130,7 +130,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
         $scope.selectDriverClass = 'button-progress-now';
         if($scope.preferredDriver != ""){
             $http({
-                url : "/webapp/soapservlet",
+                url : "../soapservlet",
                 method : "POST",
                 headers: {'Content-Type': 'application/json'},
                 params : {
@@ -148,7 +148,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
             });
         } else {
             $http({
-                url : "/webapp/soapservlet",
+                url : "../soapservlet",
                 method : "POST",
                 headers: {'Content-Type': 'application/json'},
                 params : {
@@ -207,7 +207,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
     $scope.completeOrder = function(){
         if($scope.rating > 0){
             $http({
-                url : "/webapp/soapservlet",
+                url : "../soapservlet",
                 method : "POST",
                 headers: {'Content-Type': 'application/json'},
                 params : {
