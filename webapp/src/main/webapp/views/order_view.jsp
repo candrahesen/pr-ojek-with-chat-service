@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="./resources/css/style.css?<%= ts %>" >
     <link rel="stylesheet" href="./resources/css/element.css?<%= ts %>">
     <link rel="stylesheet" href="./resources/css/order.css?<%= ts %>">
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-messaging.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <meta charset="utf-8">
