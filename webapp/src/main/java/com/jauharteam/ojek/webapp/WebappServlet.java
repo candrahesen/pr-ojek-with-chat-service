@@ -6,6 +6,8 @@ import com.jauharteam.ojek.identity.IdentityService;
 import com.jauharteam.ojek.ojek.LocationService;
 import com.jauharteam.ojek.ojek.OrderService;
 import com.jauharteam.ojek.ojek.UserService;
+import com.jauharteam.ojek.webapp.token.AccessToken;
+import com.jauharteam.ojek.webapp.token.AccessTokenUtil;
 import com.ojek.common.util.RestUtil;
 import com.ojek.common.util.StringUtil;
 
@@ -151,8 +153,14 @@ public abstract class WebappServlet extends HttpServlet {
         return;
     }
 
+    protected AccessToken getAccessToken(HttpServletRequest req) {
+        String accessToken = getCookie(req, "accessToken");
+        return AccessTokenUtil.parseAccessToken(accessToken);
+    }
+
     protected Boolean checkIsLoggedIn(HttpServletRequest request) {
-        String token = getCookie(request, "accessToken");
+        AccessToken accessToken = getAccessToken(request);
+        String token = accessToken.getAccessToken();
         if (token == null)
             return false;
         return getIdentityService().isTokenValid(token);

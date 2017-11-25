@@ -10,7 +10,7 @@ public class AccessTokenUtil {
 
     private static final Pattern accessTokenPattern = Pattern.compile("([a-zA-Z0-9\\+\\/=]*)\\.([a-zA-Z0-9\\+\\/=]*)\\.([a-zA-Z0-9\\+\\/=]*)");
 
-    private static String generateString(AccessToken token) {
+    public static String generateString(AccessToken token) {
         String accessToken = string(token.getAccessToken());
         String userAgent = string(token.getUserAgent());
         String ipAddress = string(token.getIpAddress());
@@ -22,7 +22,7 @@ public class AccessTokenUtil {
         return accessToken + "." + userAgent + "." + ipAddress;
     }
 
-    private static AccessToken parseAccessToken(String accessToken) {
+    public static AccessToken parseAccessToken(String accessToken) {
         accessToken = string(accessToken);
         Matcher matcher = accessTokenPattern.matcher(accessToken);
         if (matcher.matches()) {
