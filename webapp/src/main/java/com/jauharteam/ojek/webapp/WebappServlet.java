@@ -28,6 +28,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import static com.ojek.common.util.StringUtil.string;
+
 public abstract class WebappServlet extends HttpServlet {
 
     protected Config config;
@@ -160,9 +162,24 @@ public abstract class WebappServlet extends HttpServlet {
 
     protected Boolean checkIsLoggedIn(HttpServletRequest request) {
         AccessToken accessToken = getAccessToken(request);
+        if (accessToken == null)
+            return false;
+
         String token = accessToken.getAccessToken();
         if (token == null)
             return false;
+
+        String userAgent = string(request.getHeader("User-Agent"));
+        String ipAddress = request.getHeader("x-forwarded-for");
+        if (ipAddress == null)
+            ipAddress = string(request.getRemoteHost());
+
+        if (accessToken.getUserAgent() == null || !accessToken.getUserAgent().equals(userAgent))
+            return false;
+
+        if (accessToken.getIpAddress() == null || !accessToken.getIpAddress().equals(ipAddress))
+            return false;
+
         return getIdentityService().isTokenValid(token);
     }
 
