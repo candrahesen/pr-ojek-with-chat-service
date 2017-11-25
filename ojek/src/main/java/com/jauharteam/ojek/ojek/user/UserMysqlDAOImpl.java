@@ -201,7 +201,6 @@ public class UserMysqlDAOImpl extends MysqlDAO implements UserDAO {
             stmt.setInt(9, user.getId());
 
             int affected = stmt.executeUpdate();
-            if (affected <= 0) return false;
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -233,7 +232,6 @@ public class UserMysqlDAOImpl extends MysqlDAO implements UserDAO {
             stmt.setInt(2, driverId);
 
             int affected = stmt.executeUpdate();
-            if (affected <= 0) return false;
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
