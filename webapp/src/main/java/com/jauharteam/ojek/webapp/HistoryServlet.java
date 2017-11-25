@@ -16,7 +16,7 @@ public class HistoryServlet extends WebappServlet{
             return;
         }
         try {
-            String accessToken = getCookie(req, "accessToken");
+            String accessToken = getAccessToken(req).getAccessToken();
             req.setAttribute("accessToken", accessToken);
             req.setAttribute("userService", getOjekUserService());
             req.setAttribute("orderService", getOjekOrderService());

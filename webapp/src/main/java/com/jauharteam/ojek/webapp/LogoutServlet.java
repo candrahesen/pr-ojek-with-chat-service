@@ -36,7 +36,7 @@ public class LogoutServlet extends WebappServlet {
         DataOutputStream wr = new DataOutputStream(httpCon.getOutputStream());
 
         // get token
-        String accessToken = getCookie(req, "accessToken");
+        String accessToken = getAccessToken(req).getAccessToken();
         wr.writeBytes("token=" + accessToken);
         wr.flush();
         wr.close();

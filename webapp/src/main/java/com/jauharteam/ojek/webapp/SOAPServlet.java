@@ -50,7 +50,7 @@ public class SOAPServlet extends WebappServlet {
     }
 
     private void getDriverById(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String accessToken = getCookie(req, "accessToken");
+        String accessToken = getAccessToken(req).getAccessToken();
         String idDriver = req.getParameter("iddriver");
         System.out.println(idDriver);
         User driver = getOjekUserService().getDriverById(accessToken, Integer.valueOf(idDriver));
@@ -65,7 +65,7 @@ public class SOAPServlet extends WebappServlet {
     }
 
     private void submitOrder(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String accessToken = getCookie(req, "accessToken");
+        String accessToken = getAccessToken(req).getAccessToken();
         String idDriver = req.getParameter("iddriver");
         String idCustomer = req.getParameter("idcust");
         String destination = req.getParameter("dest");
@@ -101,7 +101,7 @@ public class SOAPServlet extends WebappServlet {
     }
 
     private void getDriver(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String accessToken = getCookie(req, "accessToken");
+        String accessToken = getAccessToken(req).getAccessToken();
         String location = req.getParameter("loc");
         String destination = req.getParameter("dest");
         String prefDriver = req.getParameter("prefDriver");
@@ -127,7 +127,7 @@ public class SOAPServlet extends WebappServlet {
     }
 
     private void editLocation(HttpServletRequest req, HttpServletResponse resp) {
-        String accessToken = getCookie(req, "accessToken");
+        String accessToken = getAccessToken(req).getAccessToken();
         String locationPrefStr = req.getParameter("location-pref");
         String locationStr = req.getParameter("loc-" + locationPrefStr);
         String locationLastStr = req.getParameter("loc-last-" + locationPrefStr);
@@ -148,7 +148,7 @@ public class SOAPServlet extends WebappServlet {
     }
 
     private void addLocation(HttpServletRequest req, HttpServletResponse resp) {
-        String accessToken = getCookie(req, "accessToken");
+        String accessToken = getAccessToken(req).getAccessToken();
         String locationStr = req.getParameter("location");
 
         Location location = new Location();
@@ -166,7 +166,7 @@ public class SOAPServlet extends WebappServlet {
     }
 
     private void deleteLocation(HttpServletRequest req) {
-        String accessToken = getCookie(req, "accessToken");
+        String accessToken = getAccessToken(req).getAccessToken();
         Integer locId = Integer.valueOf(req.getParameter("loc_id"));
 
         if(!getOjekLocationService().deleteLocation(accessToken, locId)){
@@ -175,7 +175,7 @@ public class SOAPServlet extends WebappServlet {
     }
 
     private void hideOrderDriver(HttpServletRequest req, HttpServletResponse resp) {
-        String accessToken = getCookie(req, "accessToken");
+        String accessToken = getAccessToken(req).getAccessToken();
         String id = req.getParameter("id");
         if(!getOjekOrderService().hideOrderDriver(accessToken, Integer.valueOf(id))){
             req.setAttribute("errorMessage", "Internal server error.");
@@ -183,7 +183,7 @@ public class SOAPServlet extends WebappServlet {
     }
 
     private void hideOrderCustomer(HttpServletRequest req, HttpServletResponse resp) {
-        String accessToken = getCookie(req, "accessToken");
+        String accessToken = getAccessToken(req).getAccessToken();
         String id = req.getParameter("id");
         if(!getOjekOrderService().hideOrderCustomer(accessToken, Integer.valueOf(id))){
             req.setAttribute("errorMessage", "Internal server error.");
@@ -192,7 +192,7 @@ public class SOAPServlet extends WebappServlet {
 
 
     private User[] getPrefDriver(HttpServletRequest req){
-        String accessToken = getCookie(req, "accessToken");
+        String accessToken = getAccessToken(req).getAccessToken();
         String destLoc= req.getParameter( "loc");
         String pickLoc= req.getParameter("dest");
         String driverName= req.getParameter("pref");

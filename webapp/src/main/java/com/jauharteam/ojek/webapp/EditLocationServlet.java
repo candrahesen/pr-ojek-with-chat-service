@@ -15,7 +15,7 @@ public class EditLocationServlet extends WebappServlet{
             return;
         }
         try {
-            String accessToken = getCookie(req, "accessToken");
+            String accessToken = getAccessToken(req).getAccessToken();
             req.setAttribute("accessToken", accessToken);
             req.setAttribute("userService", getOjekUserService());
             req.setAttribute("locationService", getOjekLocationService());

@@ -28,7 +28,7 @@ public class EditProfileServlet extends WebappServlet {
         }
 
         try {
-            String accessToken = getCookie(req, "accessToken");
+            String accessToken = getAccessToken(req).getAccessToken();
             req.setAttribute("accessToken", accessToken);
             req.setAttribute("userService", getOjekUserService());
             req.setAttribute("config", config);
@@ -64,7 +64,7 @@ public class EditProfileServlet extends WebappServlet {
             return;
         }
 
-        String accessToken = getCookie(req, "accessToken");
+        String accessToken = getAccessToken(req).getAccessToken();
         String name = parameters.get("name");
         String phone = parameters.get("phone");
         String driverStr = parameters.get("driver");
