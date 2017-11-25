@@ -3,6 +3,8 @@ package com.jauharteam.ojek.webapp;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jauharteam.ojek.ojek.UserService;
+import com.jauharteam.ojek.webapp.token.AccessToken;
+import com.jauharteam.ojek.webapp.token.AccessTokenUtil;
 import com.ojek.common.User;
 
 import javax.servlet.ServletException;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.ojek.common.util.RestUtil.httpPost;
+import static com.ojek.common.util.StringUtil.string;
 
 /**
  * Created by dery on 11/7/17.
@@ -35,6 +38,12 @@ public class RegisterServlet extends WebappServlet {
         if (driverStr != null && driverStr.length() > 0)
             isDriver = driverStr.equals("1");
 
+        String userAgent = string(req.getHeader("User-Agent"));
+        String ipAddress = req.getHeader("x-forwarded-for");
+        if (ipAddress == null)
+            ipAddress = string(req.getRemoteHost());
+        System.out.println("Trying to register: " + ipAddress + " -> " + userAgent);
+
         if (checkIsLoggedIn(req)) {
             req.setAttribute("errorMessage", "User already logged in");
             resp.sendRedirect(config.getBaseUrl() + "profile");
@@ -54,7 +63,8 @@ public class RegisterServlet extends WebappServlet {
                     String refreshToken = responseNode.get("refreshToken").asText();
                     String expiredToken = responseNode.get("expired").asText();
 
-                    resp.addCookie(new Cookie("accessToken", accessToken));
+                    AccessToken token = new AccessToken(accessToken, userAgent, ipAddress);
+                    resp.addCookie(new Cookie("accessToken", AccessTokenUtil.generateString(token)));
                     resp.addCookie(new Cookie("refreshToken", refreshToken));
                     resp.addCookie(new Cookie("tokenExpired", expiredToken));
 

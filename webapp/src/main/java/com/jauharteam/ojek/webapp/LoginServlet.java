@@ -2,6 +2,8 @@ package com.jauharteam.ojek.webapp;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jauharteam.ojek.webapp.token.AccessToken;
+import com.jauharteam.ojek.webapp.token.AccessTokenUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -67,7 +69,8 @@ public class LoginServlet extends WebappServlet {
                     String refreshToken = responseNode.get("refreshToken").asText();
                     String expiredToken = responseNode.get("expired").asText();
 
-                    resp.addCookie(new Cookie("accessToken", accessToken));
+                    AccessToken token = new AccessToken(accessToken, userAgent, ipAddress);
+                    resp.addCookie(new Cookie("accessToken", AccessTokenUtil.generateString(token)));
                     resp.addCookie(new Cookie("refreshToken", refreshToken));
                     resp.addCookie(new Cookie("tokenExpired", expiredToken));
 
