@@ -8,6 +8,9 @@ var mongoose = require('mongoose');
 
 var tokenMapping = {};
 
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
 db.once('open', function(){
   console.log("Connected to mongoDB");
 });
@@ -28,11 +31,15 @@ var saveChat = function(sender, message, topic){
 
 app.post('/register', function(req, res) {
   // should check token to identity service for security purpose.
-  var token = req.query.token;
-  var username = req.query.username;
+  var token = req.body.token;
+  var username = req.body.username;
   tokenMapping[username] = token;
+  res.json({token:token, username:username});
+});
 
-  res.send({token:token, username:username});
+// for debugging purpose only
+app.get('/token_map', function(req, res) {
+  res.json(tokenMapping);
 });
 
 app.post('/send', function(req, res) {
