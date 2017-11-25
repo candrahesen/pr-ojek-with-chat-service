@@ -44,22 +44,35 @@ app.get('/token_map', function(req, res) {
 
 app.post('/send', function(req, res) {
   var topics = "/topics/" +  req.query.topics;
+  var receiver = req.query.receiver;
   var messages = req.query.messages;
   var sender = req.query.sender;
 
+  console.log("Chat sent", {
+    topic: topics,
+    receiver: receiver,
+    message: messages,
+    sender: sender
+  });
+  var receiverToken = tokenMapping[receiver];
+  if (receiverToken == undefined) {
+    console.log("Chat not sent because receiver is not registered");
+    res.json({"error":"receiver not registered in the session"});
+  }
+
   var payloadbody = {
-    to : topics,
+    to : receiverToken,
     priority : "high",
     notification : {
-      body : messages,
+      body : {topic: topics, receiver: receiver, message: message, sender:sender},
       title : "FCM Message"
     }
   }
 
-  console.log("Sending: " + payloadbody);
+  console.log("Sending payload body to firebase", payloadbody);
   
   request.post('https://fcm.googleapis.com/fcm/send',
-   {headers : {
+    {headers : {
       'Content-Type': 'application/json',
       'Authorization': 'key=AAAA-vSCVXk:APA91bEd9voLgauOsD8F-ND2mClzYBlMznKIJmwQWJEW4sPz_u4lXN6Qy9UDjur5LjZltBXgCxLKpLRgnw5jCg4HuFcSAdYINMUqm4RNF8FQKOV_Q0qXeFOWqTjDZ91ZkwtQKdjib3Gr' 
     },
