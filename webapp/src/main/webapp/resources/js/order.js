@@ -1,3 +1,14 @@
+var config = { 
+    apiKey: "AIzaSyBxzVgPhOMrFtz8t-b5PE8ZZEWQvyWDgEY", 
+    authDomain: "pr-ojek-e79f4.firebaseapp.com", 
+    databaseURL: "https://pr-ojek-e79f4.firebaseio.com", 
+    projectId: "pr-ojek-e79f4", 
+    storageBucket: "pr-ojek-e79f4.appspot.com", 
+    messagingSenderId: "1077844006265" 
+}; 
+firebase.initializeApp(config);
+messaging = firebase.messaging();
+
 var rating = 0;
 
 function changeTo(element){
@@ -233,4 +244,18 @@ app.controller('appController', function($scope, $timeout, $http, $window){
             alert("Please give rating");
         }
     }
+
+    messaging.requestPermission().then(function() {
+        console.log("Permission granted");
+        return messaging.getToken();
+    }).then(function(token) {
+        console.log(token);
+        $scope.browserToken = token;
+    }.bind($scope)).catch(function(err) {
+        console.log("Error occured");
+    });
+    
+    messaging.onMessage(function(payload) {
+        console.log('onMessage: ', payload);
+    });
 });
