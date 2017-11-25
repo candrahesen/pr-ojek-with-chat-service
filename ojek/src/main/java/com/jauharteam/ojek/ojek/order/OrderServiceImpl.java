@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
     public Boolean addOrder(String token, Order order) {
         if(getIdentityService().isTokenValid(token)) {
             User user = getIdentityService().getUserByToken(token);
-            if(order.getCustomerId()==user.getId()){
+            if(order != null && order.getCustomerId() != null && order.getCustomerId().equals(user.getId())) {
                 return orderDAO.addOrder(order);
             }
         }
@@ -50,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
         if(getIdentityService().isTokenValid(token)) {
             User user = getIdentityService().getUserByToken(token);
             Order order = orderDAO.getOrder(id);
-            if(order.getCustomerId()==user.getId()){
+            if(order != null && order.getCustomerId() != null && order.getCustomerId().equals(user.getId())) {
                 return order;
             }
         }
@@ -93,7 +93,7 @@ public class OrderServiceImpl implements OrderService {
         if(getIdentityService().isTokenValid(token)) {
             User user = getIdentityService().getUserByToken(token);
             Order order = orderDAO.getOrder(orderID);
-            if (order.getDriverId() == user.getId())
+            if(order != null && order.getCustomerId() != null && order.getCustomerId().equals(user.getId()))
                 return orderDAO.hideOrderDriver(orderID);
         }
         return false;
