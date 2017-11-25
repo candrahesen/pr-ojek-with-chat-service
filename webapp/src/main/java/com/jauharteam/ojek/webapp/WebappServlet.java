@@ -104,6 +104,12 @@ public abstract class WebappServlet extends HttpServlet {
                 params.put("refresh", getCookie(req, "refreshToken"));
                 String responseStr = RestUtil.httpPost(config.getIdentityRestPath() + "refresh", params);
 
+                String userAgent = string(req.getHeader("User-Agent"));
+                String ipAddress = req.getHeader("x-forwarded-for");
+                if (ipAddress == null)
+                    ipAddress = string(req.getRemoteHost());
+                System.out.println("Trying to refresh: " + ipAddress + " -> " + userAgent);
+
                 if (responseStr == null)
                     req.setAttribute("errorMessage", "Internal server error.");
                 else {
@@ -114,7 +120,8 @@ public abstract class WebappServlet extends HttpServlet {
                         String refreshToken = responseNode.get("refreshToken").asText();
                         String expiredToken = responseNode.get("expired").asText();
 
-                        resp.addCookie(new Cookie("accessToken", accessToken));
+                        AccessToken token = new AccessToken(accessToken, userAgent, ipAddress);
+                        resp.addCookie(new Cookie("accessToken", AccessTokenUtil.generateString(token)));
                         resp.addCookie(new Cookie("refreshToken", refreshToken));
                         resp.addCookie(new Cookie("tokenExpired", expiredToken));
                         setCookie(req, "accessToken", accessToken);
