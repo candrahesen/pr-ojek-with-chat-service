@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
+var config = require('./config')
 
 mongoose.Promise = Promise;
 
-mongoose.connect('mongodb://localhost/chat_projek', {
+mongoose.connect(config.mongoUrl, {
     useMongoClient: true,
     promiseLibrary: global.Promise
 });
