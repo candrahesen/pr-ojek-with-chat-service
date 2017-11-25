@@ -19,6 +19,8 @@ public interface UserDAO {
 
     public Boolean editUser(User user);
 
+    public Boolean rateUser(Integer driverId, Integer rate);
+
     public Boolean rateUser(User user, Integer rate);
 
     public ArrayList<User> getPrefDriver(Integer userId, String driverName, String pickLoc, String destLoc);

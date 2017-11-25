@@ -222,14 +222,14 @@ public class UserMysqlDAOImpl extends MysqlDAO implements UserDAO {
     }
 
     @Override
-    public Boolean rateUser(User user, Integer rate) {
+    public Boolean rateUser(Integer driverId, Integer rate) {
         Connection conn = null;
         PreparedStatement stmt = null;
         try {
             conn = getConnection();
             stmt = conn.prepareStatement("UPDATE users SET rating = rating + ?, votes=votes+1 WHERE users.id = ?;");
             stmt.setInt(1, rate);
-            stmt.setInt(2, user.getId());
+            stmt.setInt(2, driverId);
 
             int affected = stmt.executeUpdate();
             if (affected <= 0) return false;
@@ -250,6 +250,11 @@ public class UserMysqlDAOImpl extends MysqlDAO implements UserDAO {
                 }
         }
         return false;
+    }
+
+    @Override
+    public Boolean rateUser(User user, Integer rate) {
+        return rateUser(user.getId(), rate);
     }
 
     @Override
