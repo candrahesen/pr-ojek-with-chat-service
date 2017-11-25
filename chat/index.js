@@ -6,6 +6,8 @@ var chat = require('./chat');
 var db = require('./connection');
 var mongoose = require('mongoose');
 
+var tokenMapping = {};
+
 db.once('open', function(){
   console.log("Connected to mongoDB");
 });
@@ -24,6 +26,14 @@ var saveChat = function(sender, message, topic){
   });
 }
 
+app.post('/register', function(req, res) {
+  // should check token to identity service for security purpose.
+  var token = req.query.token;
+  var username = req.query.username;
+  tokenMapping[username] = token;
+
+  res.send({token:token, username:username});
+});
 
 app.post('/send', function(req, res) {
   var topics = "/topics/" +  req.query.topics;
