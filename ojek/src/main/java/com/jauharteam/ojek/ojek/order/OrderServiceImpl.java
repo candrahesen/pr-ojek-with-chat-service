@@ -5,6 +5,8 @@ import com.jauharteam.ojek.ojek.Config;
 import com.jauharteam.ojek.ojek.ConfigLoader;
 import com.jauharteam.ojek.ojek.IdentityServiceLoader;
 import com.jauharteam.ojek.ojek.OrderService;
+import com.jauharteam.ojek.ojek.user.UserDAO;
+import com.jauharteam.ojek.ojek.user.UserMysqlDAOImpl;
 import com.ojek.common.Order;
 import com.ojek.common.User;
 
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 public class OrderServiceImpl implements OrderService {
 
     private OrderDAO orderDAO;
+    private UserDAO userDAO;
 
     private IdentityService getIdentityService() {
         return IdentityServiceLoader.getIdentityService();
@@ -28,6 +31,7 @@ public class OrderServiceImpl implements OrderService {
         Config config = new ConfigLoader().getConfig();
         try {
             orderDAO = new OrderMysqlDAOImpl(config.getJdbc().getUrl(), config.getJdbc().getUsername(), config.getJdbc().getPassword());
+            userDAO = new UserMysqlDAOImpl(config.getJdbc().getUrl(), config.getJdbc().getUsername(), config.getJdbc().getPassword());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -39,7 +43,11 @@ public class OrderServiceImpl implements OrderService {
         if(getIdentityService().isTokenValid(token)) {
             User user = getIdentityService().getUserByToken(token);
             if(order != null && order.getCustomerId() != null && order.getCustomerId().equals(user.getId())) {
-                return orderDAO.addOrder(order);
+                Boolean success = orderDAO.addOrder(order);
+                if (success == null)
+                    success = false;
+                success = success && userDAO.rateUser(order.getDriverId(), order.getRate());
+                return success;
             }
         }
         return false;
