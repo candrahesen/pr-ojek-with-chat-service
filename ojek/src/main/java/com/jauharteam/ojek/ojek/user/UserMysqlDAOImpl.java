@@ -388,8 +388,8 @@ public class UserMysqlDAOImpl extends MysqlDAO implements UserDAO {
         try{
             conn = getConnection();
             stmt = conn.prepareStatement("UPDATE users SET finding=? WHERE ID=?");
-            stmt.setInt(1, driverId);
-            stmt.setInt(2, find);
+            stmt.setInt(1, find);
+            stmt.setInt(2, driverId);
 
             int affected = stmt.executeUpdate();
             if (affected <= 0) return false;

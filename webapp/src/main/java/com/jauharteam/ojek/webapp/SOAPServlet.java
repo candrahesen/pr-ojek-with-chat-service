@@ -212,6 +212,7 @@ public class SOAPServlet extends WebappServlet {
         UserService userService = getOjekUserService();
         Boolean respon = userService.setFinding(accessToken, find);
 
+        res.setContentType("text/plain");
         Writer writer = res.getWriter();
         if(respon){
             writer.write("success");
