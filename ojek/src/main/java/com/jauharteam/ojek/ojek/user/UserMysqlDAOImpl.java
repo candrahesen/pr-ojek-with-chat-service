@@ -267,7 +267,7 @@ public class UserMysqlDAOImpl extends MysqlDAO implements UserDAO {
                     "SELECT DISTINCT user_location.user_id AS iddriver FROM user_location JOIN " +
                     "(SELECT locations.ID FROM locations WHERE locations.location=? OR locations.location=?) " +
                     "AS idloc ON user_location.location_id=idloc.id ) AS driver ON users.ID=driver.iddriver " +
-                    "WHERE (users.username LIKE ? OR users.name LIKE ?) AND users.ID<>? AND users.driver=1");
+                    "WHERE (users.username LIKE ? OR users.name LIKE ?) AND users.ID<>? AND users.driver=1 AND users.finding=1");
             stmt1.setString(1,pickLoc);
             stmt1.setString(2,destLoc);
             stmt1.setString(3,"%" + driverName + "%");
@@ -324,7 +324,7 @@ public class UserMysqlDAOImpl extends MysqlDAO implements UserDAO {
                         "SELECT DISTINCT user_location.user_id AS iddriver FROM user_location JOIN " +
                         "(SELECT locations.ID FROM locations WHERE locations.location=? OR locations.location=?) " +
                         "AS idloc ON user_location.location_id=idloc.id ) AS driver ON users.ID=driver.iddriver WHERE " +
-                        "users.driver=1 AND users.ID<>?");
+                        "users.driver=1 AND users.ID<>? AND users.finding=1");
                 stmt1.setString(1, pickLoc);
                 stmt1.setString(2, destLoc);
                 stmt1.setInt(3, userId);
@@ -333,7 +333,7 @@ public class UserMysqlDAOImpl extends MysqlDAO implements UserDAO {
                         "SELECT DISTINCT user_location.user_id AS iddriver FROM user_location JOIN " +
                         "(SELECT locations.ID FROM locations WHERE locations.location=? OR locations.location=?) " +
                         "AS idloc ON user_location.location_id=idloc.id ) AS driver ON users.ID=driver.iddriver " +
-                        "WHERE users.username NOT LIKE ? AND users.name NOT LIKE ? AND users.driver=1 AND users.ID<>?");
+                        "WHERE users.username NOT LIKE ? AND users.name NOT LIKE ? AND users.driver=1 AND users.ID<>? AND users.finding=1");
                 stmt1.setString(1, pickLoc);
                 stmt1.setString(2, destLoc);
                 stmt1.setString(3,"%" + driverName + "%");
