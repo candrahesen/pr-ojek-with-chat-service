@@ -46,6 +46,9 @@ public class SOAPServlet extends WebappServlet {
             case "get-pref-driver":
                 getPrefDriver(req);
                 break;
+            case "set-finding":
+                setFinding(req, resp);
+                break;
         }
     }
 
@@ -200,5 +203,21 @@ public class SOAPServlet extends WebappServlet {
         UserService userService = getOjekUserService();
         User[] driverList = userService.getPrefDriver(accessToken, driverName, pickLoc, destLoc);
         return driverList;
+    }
+
+    private void setFinding(HttpServletRequest req, HttpServletResponse res) throws IOException{
+        String accessToken = getAccessToken(req).getAccessToken();
+        int find = Integer.valueOf(req.getParameter("finding"));
+
+        UserService userService = getOjekUserService();
+        Boolean respon = userService.setFinding(accessToken, find);
+
+        Writer writer = res.getWriter();
+        if(respon){
+            writer.write("success");
+        } else {
+            writer.write("failed");
+        }
+        writer.flush();
     }
 }
