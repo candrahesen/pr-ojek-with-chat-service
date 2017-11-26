@@ -233,9 +233,6 @@ app.controller('appController', function($scope, $timeout, $http, $window){
             }
         }
 
-        $scope.selectDriverClass = 'button-plain';
-        $scope.chatDriverClass = 'button-progress-now';
-        $scope.state = 'chatting';
         sender = {
             id : $window.idCustomer,
             username : $window.customerUsername
@@ -244,6 +241,31 @@ app.controller('appController', function($scope, $timeout, $http, $window){
             id : $scope.chosenDriver.id,
             username : $scope.chosenDriver.username
         };
+
+        $http({
+            url : globalConfig.chatRestPath + "send",
+            method : "POST",
+            headers: {'Content-Type': 'application/json'},
+            params : {
+                "topics": "opening", 
+                "receiver": receiver.username, 
+                "messages": "", 
+                "sender": sender.username,
+                "mode" : "open"
+            }
+        }).then(function(response){
+            var status = JSON.parse(response.data).status;
+            if(status == "success"){
+                $scope.selectDriverClass = 'button-plain';
+                $scope.chatDriverClass = 'button-progress-now';
+                $scope.state = 'chatting';
+            } else {
+                console.log(response.data);
+            }
+            $scope.input_msg = "";
+        }, function(error){
+            console.log(error);
+        })
     }
 
     $scope.closeChat = function(){
