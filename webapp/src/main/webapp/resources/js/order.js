@@ -115,12 +115,14 @@ app.controller('appController', function($scope, $timeout, $http, $window){
         }).then(function(response){
             var status = response.data.status;
             if(status == "success"){
-                appendMessage(sender, $scope.input_msg);
+                appendMessage(sender.username, $scope.input_msg);
             } else {
                 console.log(response.data);
             }
+            $scope.input_msg = "";
+        }, function(error){
+            console.log(error);
         })
-        $scope.input_msg = "";
         $timeout(function(){
             angular.element("#chat-container")[0].scrollTop = angular.element("#chat-container")[0].scrollHeight;
         }, 0);
