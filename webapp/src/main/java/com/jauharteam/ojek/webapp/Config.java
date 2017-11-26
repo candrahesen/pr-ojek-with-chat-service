@@ -3,6 +3,7 @@ package com.jauharteam.ojek.webapp;
 public class Config {
 
     private String identityRestPath;
+    private String chatRestPath;
     private String identityServicePath;
     private String userServicePath;
     private String orderServicePath;
@@ -18,6 +19,14 @@ public class Config {
 
     public void setIdentityServicePath(String identityServicePath) {
         this.identityServicePath = identityServicePath;
+    }
+
+    public String getChatRestPath() {
+        return chatRestPath;
+    }
+
+    public void setChatRestPath(String chatRestPath) {
+        this.chatRestPath = chatRestPath;
     }
 
     public String getIdentityRestPath() {
@@ -64,6 +73,7 @@ public class Config {
     public String toString() {
         return "Config{" +
                 "identityRestPath='" + identityRestPath + '\'' +
+                ", chatRestPath='" + chatRestPath + '\'' +
                 ", identityServicePath='" + identityServicePath + '\'' +
                 ", userServicePath='" + userServicePath + '\'' +
                 ", orderServicePath='" + orderServicePath + '\'' +

@@ -1,4 +1,4 @@
-var config = { 
+var firebaseConfig = {
     apiKey: "AIzaSyBxzVgPhOMrFtz8t-b5PE8ZZEWQvyWDgEY", 
     authDomain: "pr-ojek-e79f4.firebaseapp.com", 
     databaseURL: "https://pr-ojek-e79f4.firebaseio.com", 
@@ -6,7 +6,7 @@ var config = {
     storageBucket: "pr-ojek-e79f4.appspot.com", 
     messagingSenderId: "1077844006265" 
 }; 
-firebase.initializeApp(config);
+firebase.initializeApp(firebaseConfig);
 messaging = firebase.messaging();
 
 var rating = 0;
@@ -141,7 +141,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
         $scope.selectDriverClass = 'button-progress-now';
         if($scope.preferredDriver != ""){
             $http({
-                url : "../soapservlet",
+                url : globalConfig.baseUrl + "soapservlet",
                 method : "POST",
                 headers: {'Content-Type': 'application/json'},
                 params : {
@@ -159,7 +159,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
             });
         } else {
             $http({
-                url : "../soapservlet",
+                url : globalConfig.baseUrl + "soapservlet",
                 method : "POST",
                 headers: {'Content-Type': 'application/json'},
                 params : {
@@ -218,7 +218,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
     $scope.completeOrder = function(){
         if($scope.rating > 0){
             $http({
-                url : "../soapservlet",
+                url : globalConfig.baseUrl + "soapservlet",
                 method : "POST",
                 headers: {'Content-Type': 'application/json'},
                 params : {
@@ -251,8 +251,21 @@ app.controller('appController', function($scope, $timeout, $http, $window){
     }).then(function(token) {
         console.log(token);
         $scope.browserToken = token;
+        $http({
+            url : globalConfig.chatRestPath + "register",
+            method : "POST",
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            params : {
+                "username": customerUsername,
+                "token": token,
+            }
+        }).then(function success(response){
+            console.log("Success registering token to chat service", response.data);
+        }, function error(response){
+            console.log(response.statusText);
+        });
     }.bind($scope)).catch(function(err) {
-        console.log("Error occured");
+        console.log("Error occured", err);
     });
     
     messaging.onMessage(function(payload) {

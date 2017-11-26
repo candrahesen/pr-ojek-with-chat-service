@@ -24,6 +24,17 @@
     <link rel="stylesheet" href="./resources/css/style.css?<%= ts %>" >
     <link rel="stylesheet" href="./resources/css/element.css?<%= ts %>">
     <link rel="stylesheet" href="./resources/css/order.css?<%= ts %>">
+    <script>
+        var globalConfig = {
+            "identityRestPath": "<%= conf.getIdentityRestPath() %>",
+            "chatRestPath": "<%= conf.getChatRestPath() %>",
+            "identityServicePath": "<%= conf.getIdentityServicePath() %>",
+            "userServicePath": "<%= conf.getUserServicePath() %>",
+            "orderServicePath": "<%= conf.getOrderServicePath() %>",
+            "locationServicePath": "<%= conf.getLocationServicePath() %>",
+            "baseUrl": "<%= conf.getBaseUrl() %>"
+        };
+    </script>
     <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script> 
     <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-messaging.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -322,6 +333,7 @@
 
 			<script>
                 var idCustomer = <%= user.getId() %>;
+                var customerUsername = "<%= user.getUsername() %>";
                 var isDriver = <%= user.getDriver() %>;
 			</script>
 			<script type="text/javascript" src="./resources/js/order.js?<%=ts%>"></script>
