@@ -62,26 +62,7 @@ app.directive('ngEnter', function () {
 app.controller('appController', function($scope, $timeout, $http, $window){
     $scope.isDriver = $window.isDriver;
     $scope.state = 'main';
-    $scope.messages = [
-        {
-            username : 'agung',
-            message : 'Hello',
-            pos : 'right',
-            time : '11:50'
-        },
-        {
-            username : 'bocan',
-            message : 'Hello juga',
-            pos : 'left',
-            time : '11:51'
-        },
-        {
-            username : 'agung',
-            message : 'Bye',
-            pos : 'right',
-            time : '11:51'
-        },
-    ];
+    $scope.messages = [];
     $scope.input_msg = "";
     $scope.picking = "";
     $scope.destination = "";
@@ -112,12 +93,36 @@ app.controller('appController', function($scope, $timeout, $http, $window){
     };
 
     $scope.sendMessage = function(){
-        appendMessage('agung', $scope.input_msg);
+        var topic = "chat-";
+        if($window.idCustomer < $scope.chosenDriver.id){
+            topic = topic + $window.idCustomer + "-" + $scope.chosenDriver.id;
+        } else {
+            topic = topic + $scope.chosenDriver.id + "-" + $window.idCustomer; 
+        }
+
+        var sender = $window.customerUsername;
+        $http({
+            url : globalConfig.chatRestPath + "send",
+            method : "POST",
+            headers: {'Content-Type': 'application/json'},
+            params : {
+                "topics": topic, 
+                "receiver": $scope.chosenDriver.username, 
+                "messages": $scope.input_msg, 
+                "sender": $window.customerUsername
+            }
+        }).then(function(response){
+            var status = response.data.status;
+            if(status == "success"){
+                appendMessage(sender, $scope.input_msg);
+            } else {
+                console.log(response.data);
+            }
+        })
         $scope.input_msg = "";
-        // alert(angular.element("#chat-container")[0]);
         $timeout(function(){
             angular.element("#chat-container")[0].scrollTop = angular.element("#chat-container")[0].scrollHeight;
-        }, 50);
+        }, 0);
         
     };
     $scope.nextToFindOrder = function(){

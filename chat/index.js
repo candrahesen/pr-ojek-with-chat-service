@@ -54,6 +54,8 @@ app.post('/send', function(req, res) {
     message: messages,
     sender: sender
   });
+
+  res.setHeader("Access-Control-Allow-Origin", "*");
   var receiverToken = tokenMapping[receiver];
   if (receiverToken == undefined) {
     console.log("Chat not sent because receiver is not registered");
@@ -94,7 +96,7 @@ app.post('/send', function(req, res) {
       } else {
         res.write(JSON.stringify({status : 'failed'}));
       }
-      res.end();
+      res.close();
     });
   }).on('error', function(err){
     res.write(JSON.stringify({status: 'failed'}));
