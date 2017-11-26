@@ -258,27 +258,31 @@ app.controller('appController', function($scope, $timeout, $http, $window){
         }
     }
 
-    messaging.requestPermission().then(function() {
-        console.log("Permission granted");
-        return messaging.getToken();
-    }).then(function(token) {
-        console.log(token);
-        $scope.browserToken = token;
-        $http({
-            url : globalConfig.chatRestPath + "register",
-            method : "POST",
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            params : {
-                "username": customerUsername,
-                "token": token,
-            }
-        }).then(function success(response){
-            console.log("Success registering token to chat service", response.data);
-        }, function error(response){
-            console.log(response.statusText);
+    navigator.serviceWorker.register(globalConfig.baseUrl + "resources/js/firebase-messaging-sw.js")
+    .then(function (registration) {
+        messaging.useServiceWorker(registration);
+        messaging.requestPermission().then(function() {
+            console.log("Permission granted");
+            return messaging.getToken();
+        }).then(function(token) {
+            console.log(token);
+            $scope.browserToken = token;
+            $http({
+                url : globalConfig.chatRestPath + "register",
+                method : "POST",
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                params : {
+                    "username": customerUsername,
+                    "token": token,
+                }
+            }).then(function success(response){
+                console.log("Success registering token to chat service", response.data);
+            }, function error(response){
+                console.log(response.statusText);
+            });
+        }.bind($scope)).catch(function(err) {
+            console.log("Error occured", err);
         });
-    }.bind($scope)).catch(function(err) {
-        console.log("Error occured", err);
     });
     
     messaging.onMessage(function(payload) {

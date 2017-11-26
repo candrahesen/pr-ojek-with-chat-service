@@ -29,10 +29,15 @@ var saveChat = function(sender, message, topic){
   });
 }
 
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  next();
+});
+
 app.post('/register', function(req, res) {
   // should check token to identity service for security purpose.
-  var token = req.body.token;
-  var username = req.body.username;
+  var token = req.query.token;
+  var username = req.query.username;
   tokenMapping[username] = token;
   res.json({token:token, username:username});
 });
