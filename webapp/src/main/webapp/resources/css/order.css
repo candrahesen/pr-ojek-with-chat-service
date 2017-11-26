@@ -38,7 +38,7 @@
     background: #f0efef;
     margin: 10px 0px 0px 0px;
     padding: 0 10px 10px;
-    max-height:300px;
+    height:300px;
     overflow-x:hidden;
 }
 .top-bar {
