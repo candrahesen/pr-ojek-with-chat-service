@@ -62,26 +62,7 @@ app.directive('ngEnter', function () {
 app.controller('appController', function($scope, $timeout, $http, $window){
     $scope.isDriver = $window.isDriver;
     $scope.state = 'main';
-    $scope.messages = [
-        {
-            username : 'agung',
-            message : 'Hello',
-            pos : 'right',
-            time : '11:50'
-        },
-        {
-            username : 'bocan',
-            message : 'Hello juga',
-            pos : 'left',
-            time : '11:51'
-        },
-        {
-            username : 'agung',
-            message : 'Bye',
-            pos : 'right',
-            time : '11:51'
-        },
-    ];
+    $scope.messages = [];
     $scope.input_msg = "";
     $scope.picking = "";
     $scope.destination = "";
@@ -112,7 +93,8 @@ app.controller('appController', function($scope, $timeout, $http, $window){
     };
 
     $scope.sendMessage = function(){
-        appendMessage('agung', $scope.input_msg);
+        var sender = $window.customerUsername;
+        appendMessage(sender, $scope.input_msg);
         $scope.input_msg = "";
         // alert(angular.element("#chat-container")[0]);
         $timeout(function(){
