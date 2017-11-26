@@ -129,8 +129,6 @@ app.controller('appController', function($scope, $timeout, $http, $window){
         
     };
     $scope.nextToFindOrder = function(){
-        $scope.state = 'finding';
-        $scope.role = 'driver';
         // $timeout(function(){
         //     $scope.state = 'finding.got';
         //     $timeout(function(){
@@ -146,13 +144,28 @@ app.controller('appController', function($scope, $timeout, $http, $window){
             }
         }).then(function success(response){
             console.log(response.data);
+            $scope.state = 'finding';
+            $scope.role = 'driver';
         }, function error(response){
-            console.log(response.statusText);
+            console.log("We encounter an error");
         });
     };
 
     $scope.cancelFinding = function(){
-        $scope.state = 'main';
+        $http({url : globalConfig.baseUrl + "soapservlet",
+            method : "POST",
+            headers: {'Content-Type': 'application/json'},
+            params : {
+                "name": "set-finding", 
+                "finding" : 0
+            }
+        }).then(function success(response){
+            console.log(response.data);
+            $scope.state = 'main';
+            $scope.role = null;
+        }, function error(response){
+            console.log("We encounter an error");
+        });
     };
 
     $scope.grabDriver = function(){
