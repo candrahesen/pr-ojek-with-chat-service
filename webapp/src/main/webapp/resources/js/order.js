@@ -270,5 +270,13 @@ app.controller('appController', function($scope, $timeout, $http, $window){
     
     messaging.onMessage(function(payload) {
         console.log('onMessage: ', payload);
+        var body = payload.body;
+        var message = body.message;
+        var sender = body.sender;
+        var receiver = body.receiver;
+
+        if (sender == $scope.chosenDriver.username && receiver == customerUsername) {
+            console.log("Append message with content: ", message);
+        }
     });
 });
