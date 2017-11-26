@@ -380,4 +380,35 @@ public class UserMysqlDAOImpl extends MysqlDAO implements UserDAO {
         }
         return new ArrayList<>();
     }
+
+    @Override
+    public Boolean setFinding(Integer driverId, Integer find){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try{
+            conn = getConnection();
+            stmt = conn.prepareStatement("UPDATE users SET finding=? WHERE ID=?");
+            stmt.setInt(1, driverId);
+            stmt.setInt(2, find);
+
+            int affected = stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (stmt != null)
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            if (conn != null)
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+        }
+        return false;
+    }
 }

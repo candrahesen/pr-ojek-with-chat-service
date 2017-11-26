@@ -26,4 +26,6 @@ public interface UserDAO {
     public ArrayList<User> getPrefDriver(Integer userId, String driverName, String pickLoc, String destLoc);
 
     public ArrayList<User> getDriver(Integer userId, String driverName, String pickLoc, String destLoc);
+
+    public Boolean setFinding(Integer driverId, Integer find);
 }

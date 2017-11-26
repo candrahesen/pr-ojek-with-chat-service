@@ -105,4 +105,13 @@ public class UserServiceImpl implements UserService {
         }
         return new User();
     }
+
+    @Override
+    public Boolean setFinding(String token, Integer find) {
+        if(getIdentityService().isTokenValid(token)) {
+            User user = getIdentityService().getUserByToken(token);
+            return userDAO.setFinding(user.getId(), find);
+        }
+        return false;
+    }
 }

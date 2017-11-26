@@ -34,4 +34,6 @@ public interface UserService {
     @WebMethod
     public User getDriverById(String token, Integer driverId);
 
+    @WebMethod
+    public Boolean setFinding(String token, Integer find);
 }
