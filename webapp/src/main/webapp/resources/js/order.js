@@ -377,7 +377,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
                 window.location.reload();
             }
         } else if (title == 'usual'){
-    
+            console.log(body);
         }
         // if (sender == $scope.chosenDriver.username && receiver == $window.customerUsername) {
         //     console.log("Append message with content: ", message);
