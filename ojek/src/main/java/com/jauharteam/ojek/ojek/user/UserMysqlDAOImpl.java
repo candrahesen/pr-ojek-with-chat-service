@@ -392,6 +392,8 @@ public class UserMysqlDAOImpl extends MysqlDAO implements UserDAO {
             stmt.setInt(2, find);
 
             int affected = stmt.executeUpdate();
+            if (affected <= 0) return false;
+
             return true;
         } catch (SQLException e) {
             e.printStackTrace();

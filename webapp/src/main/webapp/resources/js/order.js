@@ -131,12 +131,24 @@ app.controller('appController', function($scope, $timeout, $http, $window){
     $scope.nextToFindOrder = function(){
         $scope.state = 'finding';
         $scope.role = 'driver';
-        $timeout(function(){
-            $scope.state = 'finding.got';
-            $timeout(function(){
-                $scope.state = 'chatting';
-            }, 1000);
-        }, 2000);
+        // $timeout(function(){
+        //     $scope.state = 'finding.got';
+        //     $timeout(function(){
+        //         $scope.state = 'chatting';
+        //     }, 1000);
+        // }, 2000);
+        $http({url : globalConfig.baseUrl + "soapservlet",
+            method : "POST",
+            headers: {'Content-Type': 'application/json'},
+            params : {
+                "name": "set-finding", 
+                "finding" : 1
+            }
+        }).then(function success(response){
+            console.log(response.data);
+        }, function error(response){
+            console.log(response.statusText);
+        });
     };
 
     $scope.cancelFinding = function(){
