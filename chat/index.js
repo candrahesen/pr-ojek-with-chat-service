@@ -64,8 +64,8 @@ app.post('/send', function(req, res) {
     var receiver = req.query.receiver;
     var messages = req.query.messages;
     var sender = req.query.sender;
-
-    res.setHeader("Access-Control-Allow-Origin", "*");
+    var mode = req.query.mode;
+    
     var receiverToken = tokenMapping[receiver];
     if (receiverToken == undefined) {
         console.log("Chat not sent because receiver is not registered");
@@ -76,7 +76,7 @@ app.post('/send', function(req, res) {
             priority : "high",
             notification : {
                 body : messages,
-                title : "FCM Message"
+                title : mode
             }
         }
     

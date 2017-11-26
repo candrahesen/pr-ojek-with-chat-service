@@ -110,7 +110,8 @@ app.controller('appController', function($scope, $timeout, $http, $window){
                 "topics": topic, 
                 "receiver": receiver.username, 
                 "messages": $scope.input_msg, 
-                "sender": sender.username
+                "sender": sender.username,
+                "mode" : "usual"
             }
         }).then(function(response){
             var status = JSON.parse(response.data).status;
