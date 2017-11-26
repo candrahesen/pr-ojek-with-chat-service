@@ -40,6 +40,17 @@ app.post('/register', function(req, res) {
     var token = req.query.token;
     var username = req.query.username;
     tokenMapping[username] = token;
+    
+    var tokenEntity = tokenModel({
+        token : token,
+        username : username
+    })
+    tokenEntity.save(function(err){
+        if(err) throw err;
+
+        console.log("Token saved");
+    })
+    
     res.json({token:token, username:username});
 });
 
