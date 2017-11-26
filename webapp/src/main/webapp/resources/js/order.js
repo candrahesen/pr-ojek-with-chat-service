@@ -81,6 +81,8 @@ app.controller('appController', function($scope, $timeout, $http, $window){
     $scope.chatDriverClass = 'button-plain';
     $scope.completeOrderClass = 'button-plain';
 
+    var sender, receiver;
+
     function appendMessage(username, msg){
         var time = new Date();
         var string_time = time.getHours() + ':' + time.getMinutes();
@@ -94,22 +96,21 @@ app.controller('appController', function($scope, $timeout, $http, $window){
 
     $scope.sendMessage = function(){
         var topic = "chat-";
-        if($window.idCustomer < $scope.chosenDriver.id){
-            topic = topic + $window.idCustomer + "-" + $scope.chosenDriver.id;
+        if(sender.id < receiver.id){
+            topic = topic + sender.id + "-" + receiver.id;
         } else {
-            topic = topic + $scope.chosenDriver.id + "-" + $window.idCustomer; 
+            topic = topic + receiver.id + "-" + sender.id; 
         }
 
-        var sender = $window.customerUsername;
         $http({
             url : globalConfig.chatRestPath + "send",
             method : "POST",
             headers: {'Content-Type': 'application/json'},
             params : {
                 "topics": topic, 
-                "receiver": $scope.chosenDriver.username, 
+                "receiver": receiver.username, 
                 "messages": $scope.input_msg, 
-                "sender": $window.customerUsername
+                "sender": sender.username
             }
         }).then(function(response){
             var status = response.data.status;
@@ -207,7 +208,14 @@ app.controller('appController', function($scope, $timeout, $http, $window){
         $scope.selectDriverClass = 'button-plain';
         $scope.chatDriverClass = 'button-progress-now';
         $scope.state = 'chatting';
-        console.log($scope.chosenDriver + ' ' + $scope.state);
+        sender = {
+            id : $window.idCustomer,
+            username : $window.customerUsername
+        };
+        receiver = {
+            id : $scope.chosenDriver.id,
+            username : $scope.chosenDriver.username
+        };
     }
 
     $scope.closeChat = function(){
