@@ -1,14 +1,3 @@
-var firebaseConfig = {
-    apiKey: "AIzaSyBxzVgPhOMrFtz8t-b5PE8ZZEWQvyWDgEY", 
-    authDomain: "pr-ojek-e79f4.firebaseapp.com", 
-    databaseURL: "https://pr-ojek-e79f4.firebaseio.com", 
-    projectId: "pr-ojek-e79f4", 
-    storageBucket: "pr-ojek-e79f4.appspot.com", 
-    messagingSenderId: "1077844006265" 
-}; 
-firebase.initializeApp(firebaseConfig);
-messaging = firebase.messaging();
-
 var rating = 0;
 
 function changeTo(element){
@@ -81,7 +70,11 @@ app.controller('appController', function($scope, $timeout, $http, $window){
     $scope.chatDriverClass = 'button-plain';
     $scope.completeOrderClass = 'button-plain';
 
-    var sender, receiver;
+    var sender = {
+        id : $window.idCustomer,
+        username : $window.customerUsername
+    };
+    var receiver;
 
     function appendMessage(username, msg){
         var time = new Date();
@@ -233,10 +226,6 @@ app.controller('appController', function($scope, $timeout, $http, $window){
             }
         }
 
-        sender = {
-            id : $window.idCustomer,
-            username : $window.customerUsername
-        };
         receiver = {
             id : $scope.chosenDriver.id,
             username : $scope.chosenDriver.username
@@ -249,7 +238,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
             params : {
                 "topics": "opening", 
                 "receiver": receiver.username, 
-                "messages": "", 
+                "messages": sender.username, 
                 "sender": sender.username,
                 "mode" : "open"
             }
@@ -308,6 +297,17 @@ app.controller('appController', function($scope, $timeout, $http, $window){
         }
     }
 
+    var firebaseConfig = {
+        apiKey: "AIzaSyBxzVgPhOMrFtz8t-b5PE8ZZEWQvyWDgEY", 
+        authDomain: "pr-ojek-e79f4.firebaseapp.com", 
+        databaseURL: "https://pr-ojek-e79f4.firebaseio.com", 
+        projectId: "pr-ojek-e79f4", 
+        storageBucket: "pr-ojek-e79f4.appspot.com", 
+        messagingSenderId: "1077844006265" 
+    }; 
+    firebase.initializeApp(firebaseConfig);
+    messaging = firebase.messaging();
+
     navigator.serviceWorker.register(globalConfig.baseUrl + "resources/js/firebase-messaging-sw.js")
     .then(function (registration) {
         messaging.useServiceWorker(registration);
@@ -336,14 +336,28 @@ app.controller('appController', function($scope, $timeout, $http, $window){
     });
     
     messaging.onMessage(function(payload) {
-        console.log('onMessage: ', payload);
-        var body = payload.body;
-        var message = body.message;
-        var sender = body.sender;
-        var receiver = body.receiver;
+        var title = payload.notification.title;
+        var body = payload.notification.body;
+        console.log("Get message with title: " + title + " and body: " + body);
+        if (title == 'open'){
+            var scope = angular.element($("#extern-container")).scope();
+            console.log(scope.state);
+            if(scope.state == 'finding') {
+                receiver = {
+                    username : body
+                };
+                scope.$apply(function(){
+                    scope.state = 'chatting';
+                });
+                console.log(scope.state);
+            }
+        } else if (title == 'close'){
 
-        if (sender == $scope.chosenDriver.username && receiver == customerUsername) {
-            console.log("Append message with content: ", message);
+        } else if (title == 'usual'){
+
         }
+        // if (sender == $scope.chosenDriver.username && receiver == $window.customerUsername) {
+        //     console.log("Append message with content: ", message);
+        // }
     });
 });
