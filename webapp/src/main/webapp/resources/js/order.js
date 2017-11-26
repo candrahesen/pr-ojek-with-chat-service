@@ -1,3 +1,15 @@
+var firebaseConfig = {
+    apiKey: "AIzaSyBxzVgPhOMrFtz8t-b5PE8ZZEWQvyWDgEY", 
+    authDomain: "pr-ojek-e79f4.firebaseapp.com", 
+    databaseURL: "https://pr-ojek-e79f4.firebaseio.com", 
+    projectId: "pr-ojek-e79f4", 
+    storageBucket: "pr-ojek-e79f4.appspot.com", 
+    messagingSenderId: "1077844006265" 
+}; 
+firebase.initializeApp(firebaseConfig);
+messaging = firebase.messaging();
+
+
 var rating = 0;
 
 function changeTo(element){
@@ -285,7 +297,28 @@ app.controller('appController', function($scope, $timeout, $http, $window){
             }).then(function success(response){
                 console.log(response.data);  
                 if(response.data == "ok"){
-                    $window.location.reload();
+                    $http({
+                        url : globalConfig.chatRestPath + "send",
+                        method : "POST",
+                        headers: {'Content-Type': 'application/json'},
+                        params : {
+                            "topics": "closing", 
+                            "receiver": receiver.username, 
+                            "messages": "", 
+                            "sender": sender.username,
+                            "mode" : "close"
+                        }
+                    }).then(function(response){
+                        var status = JSON.parse(response.data).status;
+                        if(status == "success"){
+                            $window.location.reload();
+                        } else {
+                            console.log(response.data);
+                        }
+                        $scope.input_msg = "";
+                    }, function(error){
+                        console.log(error);
+                    });
                 } else {
                     alert("Error occured");
                 }
@@ -297,17 +330,6 @@ app.controller('appController', function($scope, $timeout, $http, $window){
         }
     }
 
-    var firebaseConfig = {
-        apiKey: "AIzaSyBxzVgPhOMrFtz8t-b5PE8ZZEWQvyWDgEY", 
-        authDomain: "pr-ojek-e79f4.firebaseapp.com", 
-        databaseURL: "https://pr-ojek-e79f4.firebaseio.com", 
-        projectId: "pr-ojek-e79f4", 
-        storageBucket: "pr-ojek-e79f4.appspot.com", 
-        messagingSenderId: "1077844006265" 
-    }; 
-    firebase.initializeApp(firebaseConfig);
-    messaging = firebase.messaging();
-
     navigator.serviceWorker.register(globalConfig.baseUrl + "resources/js/firebase-messaging-sw.js")
     .then(function (registration) {
         messaging.useServiceWorker(registration);
@@ -316,7 +338,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
             return messaging.getToken();
         }).then(function(token) {
             console.log(token);
-            $scope.browserToken = token;
+            // $scope.browserToken = token;
             $http({
                 url : globalConfig.chatRestPath + "register",
                 method : "POST",
@@ -339,9 +361,9 @@ app.controller('appController', function($scope, $timeout, $http, $window){
         var title = payload.notification.title;
         var body = payload.notification.body;
         console.log("Get message with title: " + title + " and body: " + body);
+    
+        var scope = angular.element($("#extern-container")).scope();
         if (title == 'open'){
-            var scope = angular.element($("#extern-container")).scope();
-            console.log(scope.state);
             if(scope.state == 'finding') {
                 receiver = {
                     username : body
@@ -349,12 +371,13 @@ app.controller('appController', function($scope, $timeout, $http, $window){
                 scope.$apply(function(){
                     scope.state = 'chatting';
                 });
-                console.log(scope.state);
             }
         } else if (title == 'close'){
-
+            if(scope.state == 'chatting') {
+                window.location.reload();
+            }
         } else if (title == 'usual'){
-
+    
         }
         // if (sender == $scope.chosenDriver.username && receiver == $window.customerUsername) {
         //     console.log("Append message with content: ", message);
