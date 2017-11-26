@@ -5,6 +5,7 @@ var request = require('request');
 var chat = require('./chat');
 var db = require('./connection');
 var mongoose = require('mongoose');
+var tokenModel = require('./token');
 
 var tokenMapping = {};
 
