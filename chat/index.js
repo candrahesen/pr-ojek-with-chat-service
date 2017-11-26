@@ -82,14 +82,14 @@ app.post('/send', function(req, res) {
                 console.log("Get data: " + data.toString());
                 if (JSON.parse(data).success > 0) {
                   saveChat(sender, messages, topics);
-                  res.write(JSON.stringify({status : 'success'}));
+                  res.json(JSON.stringify({status : 'success'}));
                 } else {
-                  res.write(JSON.stringify({status : 'failed'}));
+                  res.json(JSON.stringify({status : 'failed'}));
                 }
                 res.end();
             });
         }).on('error', function(err){
-            res.write(JSON.stringify({status: 'failed'}));
+            res.json(JSON.stringify({status: 'failed'}));
             res.end();
         });
     }
@@ -108,14 +108,14 @@ app.get('/history', function(req, res) {
 
         var identtopic = chat.find({topic : "/topics/" + paramtopic}).exec(function(err, docs){
         	if(err) {
-        		res.write(JSON.stringify({status : 'failed'}));
+        		res.json(JSON.stringify({status : 'failed'}));
         		throw err;
         	} else {
         		var response = {
         			status : "success",
         			result : docs
         		}
-        		res.write(JSON.stringify(response));
+        		res.json(JSON.stringify(response));
         	}
         	res.end();
         });

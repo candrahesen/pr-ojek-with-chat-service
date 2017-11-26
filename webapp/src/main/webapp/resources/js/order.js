@@ -113,7 +113,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
                 "sender": sender.username
             }
         }).then(function(response){
-            var status = response.data.status;
+            var status = JSON.parse(response.data).status;
             if(status == "success"){
                 appendMessage(sender.username, $scope.input_msg);
             } else {
