@@ -92,7 +92,10 @@ app.controller('appController', function($scope, $timeout, $http, $window){
 
     function appendMessage(username, msg, pos){
         var time = new Date();
-        var string_time = time.getHours() + ':' + time.getMinutes();
+        var hours = time.getHours().toString();
+        var minutes = time.getMinutes().toString();
+        if (minutes.length < 2) minutes = '0' + minutes;
+        var string_time = hours + ':' + minutes;
         $scope.messages.push({
             username : username,
             message : msg,
@@ -119,7 +122,10 @@ app.controller('appController', function($scope, $timeout, $http, $window){
 
     function appendMessageWithTime(username, msg, pos, time){
         var given_time = new Date(time);
-        var string_time = given_time.getHours() + ':' + given_time.getMinutes();
+        var hours = given_time.getHours().toString();
+        var minutes = given_time.getMinutes().toString();
+        if (minutes.length < 2) minutes = '0' + minutes;
+        var string_time = hours + ':' + minutes;
         $scope.messages.push({
             username : username,
             message : msg,
