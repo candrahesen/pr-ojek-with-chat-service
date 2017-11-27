@@ -1,6 +1,6 @@
 # Tugas 3 IF3110 Pengembangan Aplikasi Berbasis Web
 
-Melakukan upgrade Website ojek online sederhana pada Tugas 2 dengan mengaplikasikan ***cloud service* (Firebase Cloud Messaging) dan *framework* MEAN stack**.
+Tugas Besar 3 IF3110 Pengembangan Aplikasi Berbasis Web ini adalah pengembangan dari aplikasi PR-Ojek yang telah dibuat pada Tugas Besar 2. Terdapat beberapa spesifikasi tambahan yang perlu diimplementasikan pada tugas kali ini. Fitur tambahan utama yang diimpleemntasikan adalah aplikasi mampu menangani chat antara *customer* dan *driver* pada saat melakukan transaksi. Dalam pengembangannya, digunakan ***cloud service* (Firebase Cloud Messaging) dan *framework* MEAN stack**.
 
 ## Tujuan Pembuatan Tugas
 
@@ -122,7 +122,7 @@ Token tidak perlu dienkripsi-dekripsi (for simplicity)
 
 
 ##### Halaman Order pada Driver
-![](img/driver_halaman_order.png)
+![](img/driver_halaman_order.PNG)
 
 
 ##### Halaman Order pada Driver Ketika Melakukan Finding Order
@@ -157,28 +157,33 @@ Token tidak perlu dienkripsi-dekripsi (for simplicity)
 
 
 
-### Referensi Terkait
-Berikut adalah referensi terkait tugas ini:
-1. https://firebase.google.com/docs/web/setup
-2. https://firebase.google.com/docs/cloud-messaging/js/client
-3. https://docs.angularjs.org/api
-
 
 ### Pembagian Tugas
 
 
-Chat App Front-end :
-1. Fungsionalitas A : 135140XX  
-2. Fungsionalitas B : 135140XX  
+#### ChatApp Front-End
+| No | Task | Implementasi | Pengujian |
+| -- |:-------------:| :-----:|-----:|
+| 1 | Finding Order | 13515019 | 13515142 |
+| 2 | Chat Container | 13515142 | 13515049 |
+| 3 | Page Transition | 13515049 | 13515019 |
+| 4 | Send Chat | 13515049 | 13515142 |
+| 5 | Receive Chat | 13515142 | 13515049 |
 
+#### Chat REST Service
+| No | Task | Implementasi | Pengujian |
+| -- |:-------------:| :-----:|-----:|
+| 1 | Set Finding Status | 13515019 | 13515049 |
+| 2 | Get History | 13515142 | 13515019 |
+| 3 | Send Chat | 13515049 | 13515019 |
+| 4 | Receive Chat | 13515049 | 13515142 |
+| 5 | Register FCM Token | 13515142 | 13515049 |
 
-Chat REST Service:  
-1. Fungsionalitas C : 135140XX  
-2. Fungsionalitas D : 135140XX  
-
-Fitur security (IP, User-agent) :
-1. Fungsionalitas E : 135140XX
-2. Fungsionalitas F : 135140XX
+#### Security
+| No | Task | Implementasi | Testing |
+| -- |:-------------:| :-----:| :-----:|
+| 1 | Pembuatan Token | 13515049 | 13515142 | 
+| 2 | Validasi Token | 13515049 | 13515019 |
 
 
 ## About
