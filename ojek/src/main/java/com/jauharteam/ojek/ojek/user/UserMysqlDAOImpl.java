@@ -36,7 +36,7 @@ public class UserMysqlDAOImpl extends MysqlDAO implements UserDAO {
             stmt.setString(5, user.getPhone());
             stmt.setString(6, user.getEmail());
             stmt.setString(7, user.getProfpicUrl());
-            stmt.setBoolean(8, user.getDriver());
+            stmt.setInt(8, user.getDriver() ? 1 : 0);
 
             int affected = stmt.executeUpdate();
             if (affected <= 0) return false;
