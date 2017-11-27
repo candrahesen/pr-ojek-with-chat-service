@@ -69,6 +69,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
     $scope.destination = "";
     $scope.preferredDriver = "";
     $scope.comment = "";
+    $scope.usernameChatRec = "";
 
     $scope.showPrefDriver = [];
     $scope.showOtherDriver = [];
@@ -81,6 +82,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
     $scope.selectDriverClass = 'button-plain';
     $scope.chatDriverClass = 'button-plain';
     $scope.completeOrderClass = 'button-plain';
+
 
     var sender = {
         id : $window.idCustomer,
@@ -131,7 +133,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
         })
         $timeout(function(){
             angular.element("#chat-container")[0].scrollTop = angular.element("#chat-container")[0].scrollHeight;
-        }, 0);
+        }, 20);
         
     };
     $scope.nextToFindOrder = function(){
@@ -369,6 +371,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
                     username : body
                 };
                 scope.$apply(function(){
+                    scope.usernameChatRec = body;
                     scope.state = 'chatting';
                 });
             }

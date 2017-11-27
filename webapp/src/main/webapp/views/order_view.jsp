@@ -226,7 +226,7 @@
                     </div>
                     <div class="centering-parent">
                         <div style="font-weight: bold; margin: auto;">
-                            @username
+                            @{{usernameChatRec}}
                         </div>
                     </div>
                 </div>
