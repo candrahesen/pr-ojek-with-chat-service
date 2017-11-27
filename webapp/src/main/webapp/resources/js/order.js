@@ -117,6 +117,17 @@ app.controller('appController', function($scope, $timeout, $http, $window){
         }, 20);
     }
 
+    function appendMessageWithTime(username, msg, pos, time){
+        var given_time = new Date(time);
+        var string_time = given_time.getHours() + ':' + given_time.getMinutes();
+        $scope.messages.push({
+            username : username,
+            message : msg,
+            pos : pos,
+            time : string_time
+        });
+    }
+
     $scope.sendMessage = function(){
         var topic = getTopics(receiver.username, sender.username);
 
@@ -279,11 +290,13 @@ app.controller('appController', function($scope, $timeout, $http, $window){
                     var chats = JSON.parse(response.data).result;
                     var i = 0;
                     for (x in chats){
+                        var pos;
                         if (chats[i].sender == sender.username) {
-                            appendMessage(chats[i].sender, chats[i].message, 'right');
+                            pos = 'right';
                         } else {
-                            appendMessage(chats[i].sender, chats[i].message, 'left');
+                            pos = 'left';
                         }
+                        appendMessageWithTime(chats[i].sender, chats[i].message, pos, chats[i].time);
                         i++;
                     }
                     autoScroll();
@@ -451,12 +464,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
                                 pos = 'left';
                             }
                             scope.$apply(function(){
-                                scope.messages.push({
-                                    username : chats[i].sender,
-                                    message : chats[i].message,
-                                    pos : pos,
-                                    time : chats[i].time
-                                });
+                                appendMessageWithTime(chats[i].sender, chats[i].message, pos, chats[i].time);
                                 scope.usernameChatRec = body;
                                 scope.state = 'chatting';
                             });
