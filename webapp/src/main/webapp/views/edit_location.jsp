@@ -78,7 +78,7 @@
             </div>
             <div class="row margin-top">
                 <h3>Add New Location : </h3>
-                <form action="/soapservlet" method="POST" accept-charset="utf-8">
+                <form action="<%= conf.getBaseUrl() %>soapservlet" method="POST" accept-charset="utf-8">
                 <input name="name" type="hidden" value="add-location">
                 <label class="col-10">
                     <input class="input-standard input-standard-v2" autocorrect="off" autocomplete="off" type="text" id="location" name="location" list="suggestLoc">
