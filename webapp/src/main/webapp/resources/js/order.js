@@ -330,6 +330,25 @@ app.controller('appController', function($scope, $timeout, $http, $window){
         } else {
             alert("Please give rating");
         }
+    };
+
+    $window.onbeforeonluad = function(){
+        if ($scope.state == 'finding'){
+            $http({url : globalConfig.baseUrl + "soapservlet",
+                method : "POST",
+                headers: {'Content-Type': 'application/json'},
+                params : {
+                    "name": "set-finding", 
+                    "finding" : 0
+                }
+            }).then(function success(response){
+                console.log(response.data);
+                $scope.state = 'main';
+                $scope.role = null;
+            }, function error(response){
+                console.log("We encounter an error");
+            });
+        }
     }
 
     navigator.serviceWorker.register(globalConfig.baseUrl + "resources/js/firebase-messaging-sw.js")
