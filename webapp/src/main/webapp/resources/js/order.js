@@ -414,6 +414,18 @@ app.controller('appController', function($scope, $timeout, $http, $window){
                 receiver = {
                     username : body
                 };
+                $http({url : globalConfig.baseUrl + "soapservlet",
+                    method : "POST",
+                    headers: {'Content-Type': 'application/json'},
+                    params : {
+                        "name": "set-finding", 
+                        "finding" : 0
+                    }
+                }).then(function success(response){
+                    console.log(response.data);
+                }, function error(response){
+                    console.log("We encounter an error");
+                });
                 var topic = getTopics(sender.username, receiver.username);
                 $http({
                     url : globalConfig.chatRestPath + "history",
