@@ -40,7 +40,7 @@
                         %>
                         <% int prefNum = location.getPrefNum(); %>
                         <tr id='row-<%= prefNum %>'>
-                        <form action="/soapservlet" method="post" accept-charset="utf-8">
+                        <form action="<%= conf.getBaseUrl() %>soapservlet" method="post" accept-charset="utf-8">
                             <input type="text" name="name" value="edit-location" hidden>
                             <td class='number'>
                                 <input type='text' id="pref-row-<%= prefNum %>" class='input-standard input-standard-v2' name="pref-<%= prefNum %>" value="<%= prefNum %>" style="display:none;">
