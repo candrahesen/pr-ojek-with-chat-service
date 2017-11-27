@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <%@ page import="com.jauharteam.ojek.webapp.Config" %>
-    <% Config config = (Config) getServletContext().getAttribute("webappConfig"); %>
+    <% Config conf = (Config) getServletContext().getAttribute("webappConfig"); %>
     <head>
         <title>Login</title>
         <link rel="stylesheet" href="./resources/css/style.css">
@@ -37,7 +37,7 @@
                         </div>
                         <div class="row margin-top">
                             <div class="col-8">
-                                <a href="<%= getServletContext().getAttribute("webappConfig").getBaseUrl() %>signup.php"> <u>Don't an have account?</u></a>
+                                <a href="<%= conf.getBaseUrl() %>signup.php"> <u>Don't an have account?</u></a>
                             </div>
                             <div class="col-4">
                                 <input class="button button-green right" name="submit" type="submit" value="GO!">
