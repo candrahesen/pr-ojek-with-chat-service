@@ -190,15 +190,17 @@ public class UserMysqlDAOImpl extends MysqlDAO implements UserDAO {
             stmt = conn.prepareStatement("UPDATE users " +
                     "SET password = ?, name = ?, phone = ?, email = ?, profile_pic_url = ?, driver = ?, rating = ?, votes = ? " +
                     "WHERE users.id = ?;");
+            System.out.println("update users " + user);
             stmt.setString(1, user.getPassword());
             stmt.setString(2, user.getName());
             stmt.setString(3, user.getPhone());
             stmt.setString(4, user.getEmail());
             stmt.setString(5, user.getProfpicUrl());
-            stmt.setBoolean(6, user.getDriver());
+            stmt.setInt(6, user.getDriver() ? 1 : 0);
             stmt.setInt(7, user.getRating());
             stmt.setInt(8, user.getVotes());
             stmt.setInt(9, user.getId());
+            System.out.println(stmt);
 
             int affected = stmt.executeUpdate();
             return true;
