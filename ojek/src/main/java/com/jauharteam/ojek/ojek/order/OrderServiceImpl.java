@@ -90,7 +90,9 @@ public class OrderServiceImpl implements OrderService {
         if(getIdentityService().isTokenValid(token)) {
             User user = getIdentityService().getUserByToken(token);
             Order order = orderDAO.getOrder(orderID);
-            if (order.getCustomerId() == user.getId())
+            if (user == null)
+                return false;
+            if (order != null && order.getCustomerId() != null && order.getCustomerId().equals(user.getId()))
                 return orderDAO.hideOrderCustomer(orderID);
         }
         return false;
