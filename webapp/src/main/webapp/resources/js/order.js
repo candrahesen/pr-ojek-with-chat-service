@@ -111,6 +111,12 @@ app.controller('appController', function($scope, $timeout, $http, $window){
         return topic;
     }
 
+    function autoScroll(){
+        $timeout(function(){
+            angular.element("#chat-container")[0].scrollTop = angular.element("#chat-container")[0].scrollHeight;
+        }, 20);
+    }
+
     $scope.sendMessage = function(){
         var topic = getTopics(receiver.username, sender.username);
 
@@ -129,17 +135,14 @@ app.controller('appController', function($scope, $timeout, $http, $window){
             var status = JSON.parse(response.data).status;
             if(status == "success"){
                 appendMessage(sender.username, $scope.input_msg, 'right');
+                autoScroll();
             } else {
                 console.log(response.data);
             }
             $scope.input_msg = "";
         }, function(error){
             console.log(error);
-        })
-        $timeout(function(){
-            angular.element("#chat-container")[0].scrollTop = angular.element("#chat-container")[0].scrollHeight;
-        }, 20);
-        
+        })        
     };
     $scope.nextToFindOrder = function(){
         // $timeout(function(){
@@ -283,6 +286,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
                         }
                         i++;
                     }
+                    autoScroll();
                 }, function (error){
                     console.log(error);
                 });
@@ -458,6 +462,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
                             });
                             i++;
                         }
+                        autoScroll();
                     }, 0);
                 }, function (error){
                     console.log(error);
@@ -471,6 +476,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
             if(scope.state == 'chatting'){
                 scope.$apply(function(){
                     appendMessage(receiver.username, body, 'left');
+                    autoScroll();
                 });
             }
         }
