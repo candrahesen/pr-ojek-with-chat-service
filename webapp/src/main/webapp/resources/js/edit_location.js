@@ -1,7 +1,7 @@
 function deleteLocation(id, pref, locId){
     var delElmt = document.getElementById("row-"+pref);
     // var locId = delElmt.getElementsByClassName('location-name')[0].textContent;
-    var url = '/soapservlet';
+    var url = globalConfig.baseUrl + 'soapservlet';
     console.log(locId)
     postAjax(url, {id: id, name: "delete-location", loc_id: locId}, function(data){
         console.log(data);
