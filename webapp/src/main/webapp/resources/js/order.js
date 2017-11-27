@@ -88,13 +88,13 @@ app.controller('appController', function($scope, $timeout, $http, $window){
     };
     var receiver;
 
-    function appendMessage(username, msg){
+    function appendMessage(username, msg, pos){
         var time = new Date();
         var string_time = time.getHours() + ':' + time.getMinutes();
         $scope.messages.push({
             username : username,
             message : msg,
-            pos : 'right',
+            pos : pos,
             time : string_time
         });
     };
@@ -121,7 +121,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
         }).then(function(response){
             var status = JSON.parse(response.data).status;
             if(status == "success"){
-                appendMessage(sender.username, $scope.input_msg);
+                appendMessage(sender.username, $scope.input_msg, 'right');
             } else {
                 console.log(response.data);
             }
@@ -377,7 +377,11 @@ app.controller('appController', function($scope, $timeout, $http, $window){
                 window.location.reload();
             }
         } else if (title == 'usual'){
-            console.log(body);
+            if(scope.state == 'chatting'){
+                scope.$apply(function(){
+                    appendMessage(receiver.username, body, 'left');
+                });
+            }
         }
         // if (sender == $scope.chosenDriver.username && receiver == $window.customerUsername) {
         //     console.log("Append message with content: ", message);
