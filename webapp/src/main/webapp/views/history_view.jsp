@@ -6,6 +6,9 @@
 <%@ page import="com.jauharteam.ojek.ojek.OrderService" %>
 <%@ page import="com.jauharteam.ojek.ojek.LocationService" %>
 <%@ page import="com.ojek.common.Order" %>
+<%@ page import="java.text.DateFormat" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+
 <%
     String accessToken = (String) request.getAttribute("accessToken");
     OrderService orderService = (OrderService) request.getAttribute("orderService");
@@ -16,6 +19,8 @@
     User user = userService.getUser(accessToken);
     Order[] historyDriver = orderService.getAllOrderDriver(accessToken);
     Order[] historyCustomer= orderService.getAllOrderCustomer(accessToken);
+
+    DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 %>
 
             <div class="row">
@@ -47,7 +52,10 @@
 
                          <div class='col-8 driver-detail'>
                             <div class='date'>
-                                <%= order1.getTime().getTime() %>
+                                <% 
+                                    Date time_driver = new Date(order1.getTime().getTime());
+                                    out.print(df.format(time_driver));
+                                %>
                             </div>
                             <div class='driver-name'>
                                 <%= userService.getUserById(accessToken, order1.getCustomerId()).getName()%>
@@ -94,12 +102,13 @@
                         </div>
                         <div class='col-8 driver-detail'>
                             <div class='date'>
-                                <%= order2.getTime().getTime() %>
-                                <%--<?php echo date('l, F j Y', strtotime($row['time'])); ?>--%>
+                                <% 
+                                    Date time = new Date(order2.getTime().getTime());
+                                    out.print(df.format(time));
+                                %>
                             </div>
                             <div class='driver-name'>
                                 <%= userService.getUserById(accessToken, order2.getDriverId()).getName() %>
-                                <%--<?php echo $row['driver_name']; ?>--%>
                             </div>
                             <div class="text">
                                 <span class="text"> <%= locationService.getLocationById(accessToken, order2.getLocationId()).getLocation()%> </span>&rarr;<span class="text"> <%= locationService.getLocationById(accessToken, order2.getDestinationId()).getLocation()%> </span>
