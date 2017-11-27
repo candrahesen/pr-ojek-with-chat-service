@@ -273,7 +273,16 @@ app.controller('appController', function($scope, $timeout, $http, $window){
                         "topics": topic, 
                     }
                 }).then(function(response){
-                    console.log(JSON.parse(response.data).result);
+                    var chats = JSON.parse(response.data).result;
+                    var i = 0;
+                    for (x in chats){
+                        if (chats[i].sender == sender.username) {
+                            appendMessage(chats[i].sender, chats[i].message, 'right');
+                        } else {
+                            appendMessage(chats[i].sender, chats[i].message, 'left');
+                        }
+                        i++;
+                    }
                 }, function (error){
                     console.log(error);
                 });
@@ -405,6 +414,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
                 receiver = {
                     username : body
                 };
+                var topic = getTopics(sender.username, receiver.username);
                 $http({
                     url : globalConfig.chatRestPath + "history",
                     method : "GET",
@@ -413,6 +423,25 @@ app.controller('appController', function($scope, $timeout, $http, $window){
                         "topics": topic, 
                     }
                 }).then(function(response){
+                    var chats = JSON.parse(response.data).result;
+                    var i = 0;
+                    var pos;
+                    for (x in chats){
+                        if (chats[i].sender == sender.username) {
+                            pos = 'right';
+                        } else {
+                            pos = 'left';
+                        }
+                        scope.$apply(function(){
+                            scope.messages.push({
+                                username : chats[i].sender,
+                                message : chats[i].message,
+                                pos : pos,
+                                time : chats[i].time
+                            });
+                        });
+                        i++;
+                    }
                     console.log(JSON.parse(response.data).result);
                 }, function (error){
                     console.log(error);
