@@ -14,12 +14,12 @@ Melakukan upgrade Website ojek online sederhana pada Tugas 2 dengan mengaplikasi
 * 13515142 - Pratamamia Agung Prihatmaja
 
 
-![](img/arsitektur_umum.png)
-
 ### Arsitektur Umum
 Tugas 3 ini terdiri dari komponen Tugas 2 dan tambahan yang harus dibuat:
 * `Pemanfaatan FCM`: Pengiriman pesan dari pelanggan ke driver atau sebaliknya dengan menggunakan layanan Firebase Cloud Messaging (FCM).
 * `Implementasi MEAN stack`: Membuat REST service untuk keperluan layanan chat memanfaatkan FCM menggunakan Node, Express dan Mongo, serta membuat halaman chat yang menggunakan Angular.
+
+![](img/arsitektur_umum.png)
 
 
 ### Deskripsi Tugas
@@ -52,9 +52,6 @@ Merubah sedikit fungsionalitas order yang sudah ada dan menambah fungsionalitas 
     * Menyimpan ke basis data history chat dari seorang pemesan dan seorang driver. Misalkan A pernah memesan driver B. Jika suatu saat A akan memesan lagi ke driver B, maka kotak chat menampilkan chat yang dilakukan pada pemesanan sebelumnya.
 3. Untuk penyimpanan history chat, basis data yang digunakan **wajib Mongo**. Tidak diperkenankan menggunakan basis data yang lain, termasuk layanan Firebase Database.
 
-### Halaman Tambahan
-1. Halaman Order pada pengguna non driver, terdapat tambahan chat driver pada tahap ketiga
-2. Halaman Order pada pengguna driver
 
 ### Rincian Arsitektur Aplikasi Chat
 
@@ -104,23 +101,61 @@ Token harus mempunyai informasi terkait browser (user agent) dan IP address dari
 Token tidak perlu dienkripsi-dekripsi (for simplicity)
 
 ### Tampilan Program
-Halaman Order pada Driver
+##### Halaman Login
+![](img/login.PNG)
 
+
+##### Halaman Register
+![](img/register.PNG)
+
+
+##### Halaman Profile
+![](img/profile.PNG)
+
+
+##### Halaman Edit Profile
+![](img/edit-profile.PNG)
+
+
+##### Halaman Edit Preferred Location
+![](img/edit-preferred-location.PNG)
+
+
+##### Halaman Order pada Driver
 ![](img/driver_halaman_order.png)
 
-Halaman Order pada Driver Ketika Melakukan Finding Order
 
+##### Halaman Order pada Driver Ketika Melakukan Finding Order
 ![](img/driver_finding_order.png)
 
-Halaman Order pada Driver Ketika Mendapat Order
 
+##### Halaman Order pada Driver Ketika Mendapat Order
 ![](img/driver_got_order.png)
 
-Halaman Order pada Pengguna, Chat Driver
 
+##### Halaman Order pada Pengguna
+![](img/order-ojek.PNG)
+
+
+##### Halaman Select Driver pada Pengguna
+![](img/select-driver.PNG)
+
+
+##### Halaman Order pada Pengguna, Chat Driver
 ![](img/pengguna_chat_driver.png)
 
-Note: chat yang dikirim oleh user yang sedang login berada disisi sebelah kanan dan lawan chatnya lain di sisi sebelah kirim. Isi chat juga ditampilkan sesuai urutan waktu diterima (paling atas adalah chat paling lama dan makin ke bawah chat makin baru).
+
+##### Halaman Complete Order pada Pengguna
+![](img/complete-order.PNG)
+
+
+##### Halaman History
+![](img/history-penumpang.PNG)
+
+
+![](img/history-driver.PNG)
+
+
 
 ### Referensi Terkait
 Berikut adalah referensi terkait tugas ini:
