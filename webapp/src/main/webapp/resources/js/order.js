@@ -427,13 +427,13 @@ app.controller('appController', function($scope, $timeout, $http, $window){
                     var i = 0;
                     var pos;
                     console.log(JSON.parse(response.data).result);
-                    for (x in chats){
-                        if (chats[i].sender == sender.username) {
-                            pos = 'right';
-                        } else {
-                            pos = 'left';
-                        }
-                        $timeout(function(){
+                    $timeout(function(){
+                        for (x in chats){
+                            if (chats[i].sender == sender.username) {
+                                pos = 'right';
+                            } else {
+                                pos = 'left';
+                            }
                             scope.$apply(function(){
                                 scope.messages.push({
                                     username : chats[i].sender,
@@ -441,16 +441,14 @@ app.controller('appController', function($scope, $timeout, $http, $window){
                                     pos : pos,
                                     time : chats[i].time
                                 });
+                                scope.usernameChatRec = body;
+                                scope.state = 'chatting';
                             });
-                        }, 0);
-                        i++;
-                    }
+                            i++;
+                        }
+                    }, 0);
                 }, function (error){
                     console.log(error);
-                })
-                scope.$apply(function(){
-                    scope.usernameChatRec = body;
-                    scope.state = 'chatting';
                 });
             }
         } else if (title == 'close'){
