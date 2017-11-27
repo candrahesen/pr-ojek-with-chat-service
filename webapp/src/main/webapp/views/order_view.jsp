@@ -167,7 +167,7 @@
                                     </div>
                                     <div class='driver-rating'>
                                             <span style='color:orange'>&#9734;</span>
-                                            <span class='rating'> {{driver.rating}}</span>({{driver.votes}} votes)
+                                            <span class='rating'> {{driver.rating/driver.votes}}</span>({{driver.votes}} votes)
                                     </div>
                                     <div class='row'>
                                             <a href='#' class='button button-success right' id='{{driver.id}}' data-ng-click='selectDriver($event)'>I CH0OSE YOU!</a>
@@ -195,7 +195,7 @@
                                     </div>
                                     <div class='driver-rating'>
                                             <span style='color:orange'>&#9734;</span>
-                                            <span class='rating'> {{driver.rating}}</span>({{driver.votes}} votes)
+                                            <span class='rating'> {{driver.rating/driver.votes}}</span>({{driver.votes}} votes)
                                     </div>
                                     <div class='row'>
                                             <a href='#' class='button button-success right' id='{{driver.id}}' data-ng-click='selectDriver($event)'>I CH0OSE YOU!</a>
