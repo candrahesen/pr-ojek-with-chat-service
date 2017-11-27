@@ -52,6 +52,7 @@ app.post('/send', function(req, res) {
   var receiver = req.query.receiver;
   var messages = req.query.messages;
   var sender = req.query.sender;
+  var mode = req.query.mode;
 
   console.log("Chat sent", {
     topic: topics,
@@ -71,8 +72,8 @@ app.post('/send', function(req, res) {
     to : receiverToken,
     priority : "high",
     notification : {
-      body : {topic: topics, receiver: receiver, message: message, sender:sender},
-      title : "FCM Message"
+      body : messages,
+      title : mode
     }
   }
 
@@ -88,24 +89,18 @@ app.post('/send', function(req, res) {
     console.log("Status code: " + response.statusCode);
     response.on('data', function(data){
       console.log("Get data: " + data.toString());
-      if(JSON.parse(data).hasOwnProperty('message_id')){
-        res.write(JSON.stringify({status : 'success'}));
+      if(JSON.parse(data).success > 0){
+        res.json(JSON.stringify({status : 'success'}));
 
-        var chats = db.collection('chats');
-        chats.find({}, {_id: 0}).sort({$natural: 1}).each(function(err, doc) {
-	      console.log(doc);
-	    });
-
-    	console.log(saveChat(sender, messages, topics));
-
+    	  saveChat(sender, messages, topics);
       } else {
-        res.write(JSON.stringify({status : 'failed'}));
+        res.json(JSON.stringify({status : 'failed'}));
       }
-      res.close();
+      res.end();
     });
   }).on('error', function(err){
-    res.write(JSON.stringify({status: 'failed'}));
-    res.close();
+    res.json(JSON.stringify({status: 'failed'}));
+    res.end();
   });
 });
 
@@ -116,14 +111,14 @@ app.get('/history', function(req, res) {
 
     var identtopic = chat.find({topic : "/topics/" + paramtopic}).exec(function(err, docs){
     	if(err) {
-    		res.write(JSON.stringify({status : 'failed'}));
+    		res.json(JSON.stringify({status : 'failed'}));
     		throw err;
     	} else {
     		var response = {
     			status : "success",
     			result : docs
     		}
-    		res.write(JSON.stringify(response));
+    		res.json(JSON.stringify(response));
     	}
     	res.end();
     });
