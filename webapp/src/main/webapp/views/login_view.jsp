@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html>
+    <%@ page import="com.jauharteam.ojek.webapp.Config" %>
+    <% Config config = (Config) getServletContext().getAttribute("webappConfig"); %>
     <head>
         <title>Login</title>
         <link rel="stylesheet" href="./resources/css/style.css">
