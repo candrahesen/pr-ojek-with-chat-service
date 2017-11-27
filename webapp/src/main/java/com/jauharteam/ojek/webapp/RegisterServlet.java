@@ -36,7 +36,7 @@ public class RegisterServlet extends WebappServlet {
         String driverStr = req.getParameter("driver");
         Boolean isDriver = false;
         if (driverStr != null && driverStr.length() > 0)
-            isDriver = driverStr.equals("1");
+            isDriver = driverStr.equals("on");
 
         String userAgent = string(req.getHeader("User-Agent"));
         String ipAddress = req.getHeader("x-forwarded-for");
