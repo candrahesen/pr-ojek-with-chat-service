@@ -426,23 +426,25 @@ app.controller('appController', function($scope, $timeout, $http, $window){
                     var chats = JSON.parse(response.data).result;
                     var i = 0;
                     var pos;
+                    console.log(JSON.parse(response.data).result);
                     for (x in chats){
                         if (chats[i].sender == sender.username) {
                             pos = 'right';
                         } else {
                             pos = 'left';
                         }
-                        scope.$apply(function(){
-                            scope.messages.push({
-                                username : chats[i].sender,
-                                message : chats[i].message,
-                                pos : pos,
-                                time : chats[i].time
+                        $timeout(function(){
+                            scope.$apply(function(){
+                                scope.messages.push({
+                                    username : chats[i].sender,
+                                    message : chats[i].message,
+                                    pos : pos,
+                                    time : chats[i].time
+                                });
                             });
-                        });
+                        }, 0);
                         i++;
                     }
-                    console.log(JSON.parse(response.data).result);
                 }, function (error){
                     console.log(error);
                 })
