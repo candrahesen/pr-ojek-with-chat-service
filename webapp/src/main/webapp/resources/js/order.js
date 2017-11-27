@@ -332,7 +332,7 @@ app.controller('appController', function($scope, $timeout, $http, $window){
         }
     };
 
-    $window.onbeforeonluad = function(){
+    $window.onbeforeunload = function(){
         if ($scope.state == 'finding'){
             $http({url : globalConfig.baseUrl + "soapservlet",
                 method : "POST",
@@ -343,8 +343,6 @@ app.controller('appController', function($scope, $timeout, $http, $window){
                 }
             }).then(function success(response){
                 console.log(response.data);
-                $scope.state = 'main';
-                $scope.role = null;
             }, function error(response){
                 console.log("We encounter an error");
             });
