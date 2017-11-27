@@ -45,7 +45,7 @@
             </span>
         </div>
         <div class="row">
-            <% if (user.getDriver() != null) {%>
+            <% if (user.getDriver() != null && user.getDriver()) {%>
             <span class="status">Driver</span> | <span style="color:orange">&#9734;</span><span
                 class="rating"><% out.print(String.format("%.2f", (double) user.getRating()/ (double) user.getVotes())); %></span>
             (<span class="votes"><%= user.getVotes() %></span>)
@@ -59,7 +59,7 @@
             <span>&#9742;</span><span> </span><span class="phone"><%= user.getPhone() %></span>
         </div>
     </div>
-    <% if (user.getDriver() != null) { %>
+    <% if (user.getDriver() != null && user.getDriver()) { %>
     <div class="row">
         <div class="right">
             <a href="<%= conf.getBaseUrl() %>editlocation"

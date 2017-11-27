@@ -56,7 +56,7 @@
                             </div>
                             <div class="col-8">
                                 <label class="switch">
-                                <input type="checkbox" name="driver" <% if(user.getDriver() != null){ %>checked<% } %> >
+                                <input type="checkbox" name="driver" <% if(user.getDriver() != null && user.getDriver()){ %>checked<% } %> >
                                 <span class="slider"></span>
                                 </label>
                             </div>
