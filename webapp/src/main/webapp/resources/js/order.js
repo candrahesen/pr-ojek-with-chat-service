@@ -101,13 +101,18 @@ app.controller('appController', function($scope, $timeout, $http, $window){
         });
     };
 
-    $scope.sendMessage = function(){
+    function getTopics(username1, username2){
         var topic = "chat-";
-        if(sender.id < receiver.id){
-            topic = topic + sender.id + "-" + receiver.id;
+        if(username1.localeCompare(username2) < 0){
+            topic = topic + username1 + "-" + username2;
         } else {
-            topic = topic + receiver.id + "-" + sender.id; 
+            topic = topic + username2 + "-" + username1; 
         }
+        return topic;
+    }
+
+    $scope.sendMessage = function(){
+        var topic = getTopics(receiver.username, sender.username);
 
         $http({
             url : globalConfig.chatRestPath + "send",
@@ -259,6 +264,19 @@ app.controller('appController', function($scope, $timeout, $http, $window){
         }).then(function(response){
             var status = JSON.parse(response.data).status;
             if(status == "success"){
+                var topic = getTopics(sender.username, receiver.username);
+                $http({
+                    url : globalConfig.chatRestPath + "history",
+                    method : "GET",
+                    headers: {'Content-Type': 'application/json'},
+                    params : {
+                        "topics": topic, 
+                    }
+                }).then(function(response){
+                    console.log(JSON.parse(response.data).result);
+                }, function (error){
+                    console.log(error);
+                });
                 $scope.selectDriverClass = 'button-plain';
                 $scope.chatDriverClass = 'button-progress-now';
                 $scope.state = 'chatting';
@@ -387,6 +405,18 @@ app.controller('appController', function($scope, $timeout, $http, $window){
                 receiver = {
                     username : body
                 };
+                $http({
+                    url : globalConfig.chatRestPath + "history",
+                    method : "GET",
+                    headers: {'Content-Type': 'application/json'},
+                    params : {
+                        "topics": topic, 
+                    }
+                }).then(function(response){
+                    console.log(JSON.parse(response.data).result);
+                }, function (error){
+                    console.log(error);
+                })
                 scope.$apply(function(){
                     scope.usernameChatRec = body;
                     scope.state = 'chatting';
