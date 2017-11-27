@@ -63,7 +63,9 @@ public class UserServiceImpl implements UserService {
     public Boolean editUser(String token, User user) {
         if(getIdentityService().isTokenValid(token)) {
             User userOld = getIdentityService().getUserByToken(token);
-            if(userOld.getId() == user.getId())
+            if (userOld == null || user == null || userOld.getId() == null)
+                return false;
+            if(userOld.getId().equals(user.getId()));
                 return userDAO.editUser(user);
         }
         return false;
