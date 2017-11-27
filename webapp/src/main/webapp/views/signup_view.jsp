@@ -65,7 +65,7 @@
                     </div>
                     <div class="row standard">
                         <div class="col-12 loginform">
-                            <input type="checkbox" name="driver" value="driver"> Also sign me up as driver!<br>
+                            <input type="checkbox" name="driver" value="on"> Also sign me up as driver!<br>
                         </div>
                     </div>
                     <div class="row margin-top">
