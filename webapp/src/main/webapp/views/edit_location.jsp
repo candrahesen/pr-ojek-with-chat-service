@@ -13,6 +13,17 @@
     User user = userService.getUser(accessToken);
     Location[] locations = locationService.getAllLocation(accessToken);
 %>
+	<script>
+        var globalConfig = {
+            "identityRestPath": "<%= conf.getIdentityRestPath() %>",
+            "chatRestPath": "<%= conf.getChatRestPath() %>",
+            "identityServicePath": "<%= conf.getIdentityServicePath() %>",
+            "userServicePath": "<%= conf.getUserServicePath() %>",
+            "orderServicePath": "<%= conf.getOrderServicePath() %>",
+            "locationServicePath": "<%= conf.getLocationServicePath() %>",
+            "baseUrl": "<%= conf.getBaseUrl() %>"
+        };
+    </script>
             <div class="row margin-top">
                 <h2>Edit Preferred Locations</h2>
                 <div class="row">
