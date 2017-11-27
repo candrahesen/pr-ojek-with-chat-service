@@ -47,7 +47,7 @@
         <div class="row">
             <% if (user.getDriver() != null) {%>
             <span class="status">Driver</span> | <span style="color:orange">&#9734;</span><span
-                class="rating"><%= user.getRating() %></span>
+                class="rating"><% out.print(String.format("%.2f", (double) user.getRating()/ (double) user.getVotes())); %></span>
             (<span class="votes"><%= user.getVotes() %></span>)
             <% } %>
         </div>
