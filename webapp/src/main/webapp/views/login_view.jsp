@@ -35,7 +35,7 @@
                         </div>
                         <div class="row margin-top">
                             <div class="col-8">
-                                <%--<a href="http://<?php echo $_SERVER['HTTP_HOST']?>/signup.php"> <u>Don't an have account?</u></a>--%>
+                                <a href="<%= getServletContext().getAttribute("webappConfig").getBaseUrl() %>signup.php"> <u>Don't an have account?</u></a>
                             </div>
                             <div class="col-4">
                                 <input class="button button-green right" name="submit" type="submit" value="GO!">
